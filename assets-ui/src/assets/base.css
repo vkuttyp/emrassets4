@@ -1,0 +1,16 @@
+/* @import url('fontawesome/css/all.min.css'); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  @apply text-teal-500;
+}
+/* 
+.app-container {
+  min-height: 350px;
+} */
+
