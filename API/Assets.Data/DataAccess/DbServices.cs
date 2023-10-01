@@ -1,6 +1,7 @@
 ﻿using Assets.Data.Models;
 using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
+using System.Runtime;
 using System.Text.Json;
 
 namespace Assets.Data.DataAccess;
@@ -107,23 +108,31 @@ public class MyDb : IMyDb
     }
     public async Task<ArpUser?> GetArpUserTreeByUser(int userId)
     {
-        using (var cmd = MyCommand.CmdProc("ArpUsersTreeById", connectionString))
+        string json = "";
+        try
         {
-            cmd.Parameters.AddWithValue("@userId", userId);
-            using (var con = cmd.Connection)
+            using (var cmd = MyCommand.CmdProc("ArpUsersTreeById", connectionString))
             {
-                await con.OpenAsync();
-                var reader = await cmd.ExecuteReaderAsync();
-                var json = await MyCommand.GetJson(reader);
-                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var con = cmd.Connection)
                 {
-                    List<ArpUser> users = JsonSerializer.Deserialize<List<ArpUser>>(json);
-                    var c = users?.Count ?? 0;
-                    return c > 0 ? users[0] : null;
+                    await con.OpenAsync();
+                    var reader = await cmd.ExecuteReaderAsync();
+                    json = await MyCommand.GetJson(reader);
+                    if (!string.IsNullOrWhiteSpace(json.ToString()))
+                    {
+                        return JsonSerializer.Deserialize<ArpUser>(json);
+                        //var c = users?.Count ?? 0;
+                        //return c > 0 ? users[0] : null;
+                    }
+                    else
+                        return null;
                 }
-                else
-                    return null;
             }
+        }
+        catch(Exception ex)
+        {
+            return null;
         }
     }
     public async Task UpdateLoginHistory(int loginType, string machineName, string loginId, int statusId)
@@ -138,6 +147,26 @@ public class MyDb : IMyDb
             {
                 await con.OpenAsync();
                 await cmd.ExecuteNonQueryAsync();
+            }
+        }
+    }
+    public async Task<User> Login(string loginId, string password)
+    {
+        using (var cmd = MyCommand.CmdProc("UserLogin", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@LoginId", loginId);
+            cmd.Parameters.AddWithValue("@Password", password);
+
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var result = await cmd.ExecuteScalarAsync();
+                if (result == null) return null;
+                string json = result.ToString();
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                    return JsonSerializer.Deserialize<User>(json);
+                else
+                    return null;
             }
         }
     }
@@ -169,7 +198,7 @@ public class MyDb : IMyDb
     public MyDb(IConfiguration configuration)
     {
         _config = configuration;
-        connectionString = _config.GetConnectionString("SqlServer")!;
+        connectionString = _config["AppSettings:ConnectionString"]!;
     }
     public async Task<User?> Login(LoginData? login)
     {
@@ -201,4 +230,5 @@ public interface IMyDb
     Task UpdateArpUser(ArpUser user);
     Task<ArpUser?> GetArpUserTreeByUser(int userId);
     Task<List<string>> GetIds();
+    Task<User> Login(string loginId, string password);
 }

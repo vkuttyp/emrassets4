@@ -31,7 +31,7 @@ function toggleMenu(){
           <div class="mb-0 lg:mb-6 xl:mb-0">
             <router-link :to="`/${$i18n.locale}`" class="font-bold text-xl flex items-end">
               <img src="@/assets/logo.png" alt="logo" class="w-10">
-              <span>ue.js</span>
+              <span>إمارة منطقة الباحة</span>
             </router-link>
           </div>
           <div class="block lg:hidden">
@@ -40,38 +40,14 @@ function toggleMenu(){
             </button>
           </div>
           <ul
-            class="uppercase tracking-wide font-bold w-full block flex-grow lg:flex lg:flex-initial lg:w-auto items-center mt-8 lg:mt-0"
+            class="tracking-wide font-bold w-full block flex-grow lg:flex lg:flex-end lg:w-auto items-center mt-8 lg:mt-0"
             :class="menuOpen ? 'block': 'hidden'"
           >
             <li class="mr-12 mb-6 lg:mb-0">
-              <search-component />
+              <router-link :to="`/${$i18n.locale}/cars`" class="text-copy-primary hover:text-gray-600">{{ $t("cars") }}</router-link>
+              
             </li>
-            <li class="mr-8 mb-6 lg:mb-0">
-              <!-- <mega-menu /> -->
-              <button>Mega Menu</button>
-            </li>
-            <li class="mr-8 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/about`" class="text-copy-primary hover:text-gray-600">About</router-link>
-            </li>
-            <li class="mr-8 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/contact`" class="text-copy-primary hover:text-gray-600">Contact</router-link>
-            </li>
-            <li class="mr-8 mb-6 lg:mb-0">
-              <!-- <modal-login /> -->
-              <button @click.prevent="authStore.logout()">Logout</button>
-            </li>
-            <li class="mr-8 mb-6 lg:mb-0">
-              <!-- <modal-register /> -->
-              <button>Register</button>
-            </li>
-            <li class="mb-4 lg:mb-0 lg:mr-8">
-              <!-- <language-switcher /> -->
-              <button>Language switcher</button>
-            </li>
-            <li>
-              <!-- <dropdown-menu /> -->
-              <button>User Detail</button>
-            </li>
+           
           </ul>
         </nav>
       </header>

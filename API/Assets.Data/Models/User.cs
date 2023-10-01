@@ -14,6 +14,8 @@ public class ArpUser
     public string? DepartmentId { get; set; }
     public string? DepCode2 { get; set; }
     public int DepManager2 { get; set; }
+    public int GroupId { get; set; }
+    public int UserTypeId { get; set; }
     public string? DepartmentName { get; set; }
     public string? name { get; set; }
     public string? IdNo { get; set; }
@@ -25,6 +27,7 @@ public class ArpUser
     public ArpDepartment? Department { get; set; }
     public List<string> Roles { get; set; } = new List<string>();
     public List<ArpUser>? Subordinates { get; set; }
+    public string Token { get; set; }
 }
 public class ArpDepartment
 {
@@ -51,7 +54,7 @@ public class User
     public DateTime EntryDate { get; set; }
     public string? CreatedBy { get; set; }
     public List<string>? Roles { get; set; }
-
+    public string Token { get; set; }
 }
 
 public class LoginData

@@ -47,17 +47,17 @@ app.MapGet("/weatherforecast", (ClaimsPrincipal user) =>
 //.WithOpenApi();
 
 // var group=app.MapGroup("/users");
-app.MapPost("users/login", (LoginData loginData, ILogger<Program> logger) =>
-{
-    string key = config["JwtSettings:Key"]!;
-    string issuer = config["JwtSettings:Issuer"]!;
-    string audience = config["JwtSettings:Audience"]!;
-    var u = new UserTest("vkuttyp@gmail.com", "00", "Miran", "Prog", 1, 2, "some");
-    logger.LogInformation($"{u}");
-    var token = Helpers.BuildToken(u, key, issuer, audience);
-    u.Token = token;
-    return Results.Ok(u);
-});
+//app.MapPost("users/login", (LoginData loginData, ILogger<Program> logger) =>
+//{
+//    string key = config["JwtSettings:Key"]!;
+//    string issuer = config["JwtSettings:Issuer"]!;
+//    string audience = config["JwtSettings:Audience"]!;
+//    var u = new UserTest("vkuttyp@gmail.com", "00", "Miran", "Prog", 1, 2, "some");
+//    logger.LogInformation($"{u}");
+//    var token = Helpers.BuildToken(u, key, issuer, audience);
+//    u.Token = token;
+//    return Results.Ok(u);
+//});
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
@@ -65,28 +65,11 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
 
-public record LoginData(string email, string password);
 
-public class UserTest
+
+public class LoginData
 {
-    public UserTest(string email, string id, string name, string title, int groupId, int userTypeId, string loginId)
-    {
-        Email = email;
-        this.id = id;
-        this.name = name;
-        Title = title;
-        GroupId = groupId;
-        UserTypeId = userTypeId;
-        LoginId = loginId;
-    }
-
-    public string Email { get; set; }
-    public string id { get; set; }
-    public string name { get; set; }
-    public string Title { get; set; }
-    public int GroupId { get; set; }
-    public int UserTypeId { get; set; }
-    public string LoginId { get; set; }
-    public string Token { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string MachineName { get; set; }
 }
-
