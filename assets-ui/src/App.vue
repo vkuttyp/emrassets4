@@ -45,9 +45,10 @@ function toggleMenu(){
           >
             <li class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/cars`" class="text-copy-primary hover:text-gray-600">{{ $t("cars") }}</router-link>
-              
             </li>
-           
+            <li class="mr-12 mb-6 lg:mb-0">
+              <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("logout") }}</router-link>
+            </li>
           </ul>
         </nav>
       </header>

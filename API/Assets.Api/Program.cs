@@ -67,9 +67,9 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 
 
 
-public class LoginData
-{
-    public string UserName { get; set; }
-    public string Password { get; set; }
-    public string MachineName { get; set; }
-}
+//public class LoginData
+//{
+//    public string UserName { get; set; }
+//    public string Password { get; set; }
+//    public string MachineName { get; set; }
+//}

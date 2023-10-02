@@ -108,32 +108,24 @@ public class MyDb : IMyDb
     }
     public async Task<ArpUser?> GetArpUserTreeByUser(int userId)
     {
-        string json = "";
-        try
+
+        using (var cmd = MyCommand.CmdProc("ArpUserDetailsByIdNo", connectionString))
         {
-            using (var cmd = MyCommand.CmdProc("ArpUsersTreeById", connectionString))
+            cmd.Parameters.AddWithValue("@idno", userId);
+            using (var con = cmd.Connection)
             {
-                cmd.Parameters.AddWithValue("@userId", userId);
-                using (var con = cmd.Connection)
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
                 {
-                    await con.OpenAsync();
-                    var reader = await cmd.ExecuteReaderAsync();
-                    json = await MyCommand.GetJson(reader);
-                    if (!string.IsNullOrWhiteSpace(json.ToString()))
-                    {
-                        return JsonSerializer.Deserialize<ArpUser>(json);
-                        //var c = users?.Count ?? 0;
-                        //return c > 0 ? users[0] : null;
-                    }
-                    else
-                        return null;
+                    return JsonSerializer.Deserialize<ArpUser>(json);
                 }
+                else
+                    return null;
             }
         }
-        catch(Exception ex)
-        {
-            return null;
-        }
+
     }
     public async Task UpdateLoginHistory(int loginType, string machineName, string loginId, int statusId)
     {
@@ -150,49 +142,49 @@ public class MyDb : IMyDb
             }
         }
     }
-    public async Task<User> Login(string loginId, string password)
+    public async Task<ArpUser> Login(int userId, string password)
     {
-        using (var cmd = MyCommand.CmdProc("UserLogin", connectionString))
+        using (var cmd = MyCommand.CmdProc("ArpUserLogin", connectionString))
         {
-            cmd.Parameters.AddWithValue("@LoginId", loginId);
-            cmd.Parameters.AddWithValue("@Password", password);
-
+            cmd.Parameters.AddWithValue("@userName", userId);
+            cmd.Parameters.AddWithValue("@password", password);
             using (var con = cmd.Connection)
             {
                 await con.OpenAsync();
-                var result = await cmd.ExecuteScalarAsync();
-                if (result == null) return null;
-                string json = result.ToString();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
                 if (!string.IsNullOrWhiteSpace(json.ToString()))
-                    return JsonSerializer.Deserialize<User>(json);
+                {
+                    return JsonSerializer.Deserialize<ArpUser>(json);
+                }
                 else
                     return null;
             }
         }
     }
-    public async Task<User?> LoginByADInfo(ADUserInfo user)
-    {
-        using (var cmd = MyCommand.CmdProc("ADUserLogin", connectionString))
-        {
-            cmd.Parameters.AddWithValue("@IdNo", user.IdNo);
-            cmd.Parameters.AddWithValue("@FullName", user.FullName);
-            cmd.Parameters.AddWithValue("@MobileNo", user.MobileNo);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-            cmd.Parameters.AddWithValue("@LastName", user.LastName);
-            using (var con = cmd.Connection)
-            {
-                await con.OpenAsync();
-                var result = await cmd.ExecuteScalarAsync();
-                if (result == null) return null;
-                string json = result.ToString()!;
-                if (!string.IsNullOrWhiteSpace(json.ToString()))
-                    return JsonSerializer.Deserialize<User>(json);
-                else
-                    return null;
-            }
-        }
-    }
+    //public async Task<User?> LoginByADInfo(ADUserInfo user)
+    //{
+    //    using (var cmd = MyCommand.CmdProc("ADUserLogin", connectionString))
+    //    {
+    //        cmd.Parameters.AddWithValue("@IdNo", user.IdNo);
+    //        cmd.Parameters.AddWithValue("@FullName", user.FullName);
+    //        cmd.Parameters.AddWithValue("@MobileNo", user.MobileNo);
+    //        cmd.Parameters.AddWithValue("@Email", user.Email);
+    //        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+    //        cmd.Parameters.AddWithValue("@LastName", user.LastName);
+    //        using (var con = cmd.Connection)
+    //        {
+    //            await con.OpenAsync();
+    //            var result = await cmd.ExecuteScalarAsync();
+    //            if (result == null) return null;
+    //            string json = result.ToString()!;
+    //            if (!string.IsNullOrWhiteSpace(json.ToString()))
+    //                return JsonSerializer.Deserialize<User>(json);
+    //            else
+    //                return null;
+    //        }
+    //    }
+    //}
     readonly IConfiguration _config;
     string connectionString;
     public MyDb(IConfiguration configuration)
@@ -200,35 +192,35 @@ public class MyDb : IMyDb
         _config = configuration;
         connectionString = _config["AppSettings:ConnectionString"]!;
     }
-    public async Task<User?> Login(LoginData? login)
-    {
-        using (var cmd = MyCommand.CmdProc("UserLogin", connectionString))
-        {
-            cmd.Parameters.AddWithValue("@userName", login?.UserName);
-            cmd.Parameters.AddWithValue("@password", login?.Password);
-            using (var con = cmd.Connection)
-            {
-                await con.OpenAsync();
-                var reader = await cmd.ExecuteReaderAsync();
-                var json = await MyCommand.GetJson(reader);
-                if (json == "[]" || json == "") return null;
+    //public async Task<User?> Login(LoginData? login)
+    //{
+    //    using (var cmd = MyCommand.CmdProc("UserLogin", connectionString))
+    //    {
+    //        cmd.Parameters.AddWithValue("@userName", login?.UserName);
+    //        cmd.Parameters.AddWithValue("@password", login?.Password);
+    //        using (var con = cmd.Connection)
+    //        {
+    //            await con.OpenAsync();
+    //            var reader = await cmd.ExecuteReaderAsync();
+    //            var json = await MyCommand.GetJson(reader);
+    //            if (json == "[]" || json == "") return null;
 
-                var data = JsonSerializer.Deserialize<User>(json);
-                return data;
-            }
-        }
-    }
+    //            var data = JsonSerializer.Deserialize<User>(json);
+    //            return data;
+    //        }
+    //    }
+    //}
    
 }
 public interface IMyDb
 {
-    Task<User?> Login(LoginData? login);
+    //Task<User?> Login(LoginData? login);
  
     Task<ArpUser?> GetOracleUser(int idNo);
     Task UpdateLoginHistory(int loginType, string machineName, string loginId, int statusId);
-    Task<User?> LoginByADInfo(ADUserInfo user);
+    //Task<User?> LoginByADInfo(ADUserInfo user);
     Task UpdateArpUser(ArpUser user);
     Task<ArpUser?> GetArpUserTreeByUser(int userId);
     Task<List<string>> GetIds();
-    Task<User> Login(string loginId, string password);
+    Task<ArpUser> Login(int userId, string password);
 }

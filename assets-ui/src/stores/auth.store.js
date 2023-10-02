@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-
+import i18n from '../locales/i18';
 import { fetchWrapper, router } from '@/helpers';
 const machineName="addd";
 const baseUrl = `${import.meta.env.VITE_API_URL}/api/users`;
@@ -18,17 +18,18 @@ export const useAuthStore = defineStore({
 
             // update pinia state
             this.user = user;
-
+         
             // store user details and jwt in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
 
             // redirect to previous url or default to home page
+          
             router.push(this.returnUrl || '/');
         },
         logout() {
             this.user = null;
             localStorage.removeItem('user');
-            router.push('/login');
+            router.push('/ar/login');
         }
     }
 });

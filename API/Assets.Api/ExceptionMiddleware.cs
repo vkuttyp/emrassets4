@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Assets.Data.Models;
+using System.Text.Json;
 
 public class ExceptionMiddleware : IMiddleware
 {
@@ -37,6 +38,6 @@ public class ExceptionMiddleware : IMiddleware
 
         }
     }
-    public record Problem(int Status, string Type, string Title, string Detail);
+    
 }
 

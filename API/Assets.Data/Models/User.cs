@@ -35,27 +35,27 @@ public class ArpDepartment
     public string? name { get; set; }
     public int ManagerId { get; set; }
 }
-public class User
-{
-    public string? id { get; set; }
-    public int SerialNo { get; set; }
-    public string? name { get; set; }
-    public string? Role { get; set; }
-    public string? Password { get; set; }
-    public string? Title { get; set; }
-    public int JobId { get; set; }
-    public string? JobName { get; set; }
-    public string? LoginId { get; set; }
-    public int UserTypeId { get; set; }
-    public int GroupId { get; set; }
-    public int DepartmentId { get; set; }
-    public string? Email { get; set; }
-    public string? MobileNo { get; set; }
-    public DateTime EntryDate { get; set; }
-    public string? CreatedBy { get; set; }
-    public List<string>? Roles { get; set; }
-    public string Token { get; set; }
-}
+//public class User
+//{
+//    public string? id { get; set; }
+//    public int SerialNo { get; set; }
+//    public string? name { get; set; }
+//    public string? Role { get; set; }
+//    public string? Password { get; set; }
+//    public string? Title { get; set; }
+//    public int JobId { get; set; }
+//    public string? JobName { get; set; }
+//    public string? LoginId { get; set; }
+//    public int UserTypeId { get; set; }
+//    public int GroupId { get; set; }
+//    public int DepartmentId { get; set; }
+//    public string? Email { get; set; }
+//    public string? MobileNo { get; set; }
+//    public DateTime EntryDate { get; set; }
+//    public string? CreatedBy { get; set; }
+//    public List<string>? Roles { get; set; }
+//    public string Token { get; set; }
+//}
 
 public class LoginData
 {
@@ -84,3 +84,4 @@ public class MyListItem
     public int id { get; set; }
     public string name { get; set; }
 }
+public record Problem(int Status, string Type, string Title, string Detail);

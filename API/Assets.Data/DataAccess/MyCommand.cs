@@ -24,36 +24,14 @@ public static class MyCommand
     public static async Task<string> GetJson(SqlDataReader reader)
     {
         var jsonResult = new StringBuilder();
-        if (!reader.HasRows)
+        while (await reader.ReadAsync())
         {
-            jsonResult.Append("[]");
-        }
-        else
-        {
-            while (await reader.ReadAsync())
-            {
-                jsonResult.Append(reader.GetValue(0).ToString());
-            }
+            jsonResult.Append(reader.GetValue(0).ToString());
         }
         return jsonResult.ToString();
     }
 
-    public static string GetJson2(SqlDataReader reader)
-    {
-        var jsonResult = new StringBuilder();
-        if (!reader.HasRows)
-        {
-            jsonResult.Append("[]");
-        }
-        else
-        {
-            while (reader.Read())
-            {
-                jsonResult.Append(reader.GetValue(0).ToString());
-            }
-        }
-        return jsonResult.ToString();
-    }
+    
     static JsonSerializerOptions option = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
     public static string ToJson(object source)
