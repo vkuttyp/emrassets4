@@ -39,7 +39,7 @@ namespace Assets.Api.Controllers
                 await _db.UpdateLoginHistory(2, name, login.UserName, status);
                 if (adUser == null)
                 {
-                    var problem = new Problem(400, "Invalid User name or Password", "Invalid Authentication", "Invalid Credentials");
+                    var problem = new Problem(400, "Invalid User name or Password", "Invalid User name or Password", "Invalid Credentials");
                     string json = JsonSerializer.Serialize(problem);
                     return Unauthorized(json);
                 }
@@ -58,7 +58,7 @@ namespace Assets.Api.Controllers
                 await _db.UpdateLoginHistory(1, name, login.UserName, status);
                if(arpUser == null)
                 {
-                    var problem = new Problem(400, "Invalid User name or Password", "Invalid Authentication", "Invalid Credentials");
+                    var problem = new Problem(400, "Invalid User name or Password", "Invalid User name or Password", "Invalid Credentials");
                     string json = JsonSerializer.Serialize(problem);
                     return Unauthorized(json);
                 }

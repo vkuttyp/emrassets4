@@ -38,7 +38,7 @@ public static class MyCommand
     {
         return JsonSerializer.Serialize(source, option);
     }
-    public static string DataTableStringBuilder(DataTable dataTable)
+    public static string DataTableJson(DataTable dataTable)
     {
         if (dataTable == null)
         {

@@ -48,7 +48,7 @@ function onSubmit(values, { setErrors }) {
                     {{ $t("login") }}
                 </button>
             </div>
-            <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{errors.apiError}}</div>
+            <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{errors.apiError.Title}}</div>
         </Form>
 
 </div>

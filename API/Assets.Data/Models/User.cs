@@ -27,6 +27,7 @@ public class ArpUser
     public ArpDepartment? Department { get; set; }
     public List<string> Roles { get; set; } = new List<string>();
     public List<ArpUser>? Subordinates { get; set; }
+    public List<AssetDelivery> Deliveries { get; set; }
     public string Token { get; set; }
 }
 public class ArpDepartment

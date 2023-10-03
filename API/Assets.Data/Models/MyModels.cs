@@ -30,6 +30,11 @@ public class AssetType
     public int id { get; set; }
     public string name { get; set; }
 }
+public class AssetCategory
+{
+    public int id { get; set; }
+    public string name { get; set; }
+}
 public class Department
 {
     public int id { get; set; }
@@ -57,6 +62,8 @@ public class Asset
     public string Description { get; set; }
     public int RegionId { get; set; }
     public int LocationId { get; set; }
+    public AssetType AssetType { get; set; }
+    public AssetCategory Category { get; set; }
 }
 
 public class AssetRequest
@@ -107,11 +114,14 @@ public class FinalApproval
 public class AssetDelivery
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
+    public int DeliveredTo { get; set; }
     public DateTime DeliveryDate { get; set; }
     public string ApprovalId { get; set; } = "";
     public string DocNo { get; set; } = "";
     public int UserId { get; set; }
     public string Notes { get; set; } = "";
+    public int AssetId { get; set; }
+    public Asset Asset { get; set; }
 }
 public class AssetReturn
 {

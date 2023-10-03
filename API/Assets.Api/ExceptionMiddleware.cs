@@ -34,6 +34,7 @@ public class ExceptionMiddleware : IMiddleware
             var problem = new Problem(500, "Server Error", ex.Message, exx);
             string json = JsonSerializer.Serialize(problem);
             context.Response.ContentType = "application/json";
+            context.Response.StatusCode = 500;
             await context.Response.WriteAsync(json);
 
         }

@@ -142,7 +142,7 @@ public class MyDb : IMyDb
             }
         }
     }
-    public async Task<ArpUser> Login(int userId, string password)
+    public async Task<ArpUser?> Login(int userId, string password)
     {
         using (var cmd = MyCommand.CmdProc("ArpUserLogin", connectionString))
         {
@@ -157,34 +157,47 @@ public class MyDb : IMyDb
                 {
                     return JsonSerializer.Deserialize<ArpUser>(json);
                 }
-                else
-                    return null;
             }
         }
+        return null;
     }
-    //public async Task<User?> LoginByADInfo(ADUserInfo user)
-    //{
-    //    using (var cmd = MyCommand.CmdProc("ADUserLogin", connectionString))
-    //    {
-    //        cmd.Parameters.AddWithValue("@IdNo", user.IdNo);
-    //        cmd.Parameters.AddWithValue("@FullName", user.FullName);
-    //        cmd.Parameters.AddWithValue("@MobileNo", user.MobileNo);
-    //        cmd.Parameters.AddWithValue("@Email", user.Email);
-    //        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-    //        cmd.Parameters.AddWithValue("@LastName", user.LastName);
-    //        using (var con = cmd.Connection)
-    //        {
-    //            await con.OpenAsync();
-    //            var result = await cmd.ExecuteScalarAsync();
-    //            if (result == null) return null;
-    //            string json = result.ToString()!;
-    //            if (!string.IsNullOrWhiteSpace(json.ToString()))
-    //                return JsonSerializer.Deserialize<User>(json);
-    //            else
-    //                return null;
-    //        }
-    //    }
-    //}
+    public async Task<List<AssetDelivery>?> AssetDeliveriesByBeneficiary(int userId, int beneficiaryId)
+    {
+        using (var cmd = MyCommand.CmdProc("AssetDeliveriesByBeneficiary", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@BeneficiaryId", beneficiaryId);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<List<AssetDelivery>>(json);
+                }
+            }
+        }
+        return null;
+    }
+    public async Task<List<ArpUser>?> SubordinateDetails(int userId)
+    {
+        using (var cmd = MyCommand.CmdProc("SubordinateDetails", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@userId", userId);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<List<ArpUser>>(json);
+                }
+            }
+        }
+        return null;
+    }
     readonly IConfiguration _config;
     string connectionString;
     public MyDb(IConfiguration configuration)
@@ -192,24 +205,7 @@ public class MyDb : IMyDb
         _config = configuration;
         connectionString = _config["AppSettings:ConnectionString"]!;
     }
-    //public async Task<User?> Login(LoginData? login)
-    //{
-    //    using (var cmd = MyCommand.CmdProc("UserLogin", connectionString))
-    //    {
-    //        cmd.Parameters.AddWithValue("@userName", login?.UserName);
-    //        cmd.Parameters.AddWithValue("@password", login?.Password);
-    //        using (var con = cmd.Connection)
-    //        {
-    //            await con.OpenAsync();
-    //            var reader = await cmd.ExecuteReaderAsync();
-    //            var json = await MyCommand.GetJson(reader);
-    //            if (json == "[]" || json == "") return null;
 
-    //            var data = JsonSerializer.Deserialize<User>(json);
-    //            return data;
-    //        }
-    //    }
-    //}
    
 }
 public interface IMyDb
@@ -222,5 +218,7 @@ public interface IMyDb
     Task UpdateArpUser(ArpUser user);
     Task<ArpUser?> GetArpUserTreeByUser(int userId);
     Task<List<string>> GetIds();
-    Task<ArpUser> Login(int userId, string password);
+    Task<ArpUser?> Login(int userId, string password);
+    Task<List<AssetDelivery>?> AssetDeliveriesByBeneficiary(int userId, int beneficieryId);
+    Task<List<ArpUser>?> SubordinateDetails(int userId);
 }
