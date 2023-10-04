@@ -23,6 +23,7 @@ public class ArpUser
     public string? Email { get; set; }
     public string? Phone { get; set; }
     public bool IsManager { get; set; }
+    public bool Collapsed { get; set; }
     public ArpUser? Manager { get; set; }
     public ArpDepartment? Department { get; set; }
     public List<string> Roles { get; set; } = new List<string>();

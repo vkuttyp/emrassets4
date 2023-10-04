@@ -25,7 +25,7 @@ function toggleMenu(){
 </template> -->
 <template>
 
-<div id="app" class="font-sans text-gray-800">
+<div id="app" class="font-sans text-gray-800" :dir="$i18n.locale=='ar'?'rtl':'ltr'">
       <header class="border-t-4 border-green-700 bg-white z-10 absolute w-full shadow-md">
         <nav class="container mx-auto px-8 flex flex-wrap justify-between items-center py-8">
           <div class="mb-0 lg:mb-6 xl:mb-0">
@@ -44,10 +44,15 @@ function toggleMenu(){
             :class="menuOpen ? 'block': 'hidden'"
           >
             <li class="mr-12 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/cars`" class="text-copy-primary hover:text-gray-600">{{ $t("cars") }}</router-link>
+              <router-link :to="`/${$i18n.locale}/cars`" class="text-copy-primary hover:text-gray-600">{{ $t("cars.cars") }}</router-link>
             </li>
             <li class="mr-12 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("logout") }}</router-link>
+              <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("login.logout") }}</router-link>
+            </li>
+            <li>
+              <select v-model="$i18n.locale" id="locale">
+              <option v-for="locale in $i18n.availableLocales" :key="locale" :value="locale">{{ locale }}</option>
+  </select>
             </li>
           </ul>
         </nav>

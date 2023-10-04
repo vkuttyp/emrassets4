@@ -4,6 +4,8 @@ import ar from './ar.json'
 
 const i18n = createI18n({
     locale: 'ar',
+    fallbackLocale: 'en',
+    legacy: false,
     messages: {
         en,
         ar
