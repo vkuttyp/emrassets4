@@ -7,6 +7,13 @@
     "logout": "تسجيل خروج"
     },
     "cars": {
-        "cars":"السيارات"
+        "cars":"السيارات",
+        "carName": "نوع السيارة",
+        "model": "موديلها",
+        "numberPlate":"رقم اللوحة",
+        "date": "التاريخ",
+        "employeeName":"الاسم",
+        "subordinateName":"الاسم",
+        "subordinates":"الموظفين"
     }
 }

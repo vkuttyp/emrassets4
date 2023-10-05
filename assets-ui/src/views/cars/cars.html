@@ -1,0 +1,62 @@
+<div class="container font-cairo">
+    <h1 class="item">
+        <p class="text-2xl p-3">{{ authUser.name }}</p>
+        <table class="table">
+            <thead>
+              <th>{{$t("cars.carName")}}</th>
+              <th>{{$t("cars.model")}}</th>
+              <th>{{$t("cars.numberPlate")}}</th>
+              <th>{{$t("cars.date")}}</th>
+            </thead>
+            <tbody>
+              <tr v-for="delivery in authUser.deliveries" :key="delivery.id">
+                <td>{{ delivery?.asset?.category?.name }}</td>
+                <td>{{ delivery?.asset?.model }}</td>
+                <td>{{ delivery?.asset?.numberPlate }}</td>
+                <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </h1>
+    <div class="item content">
+      <h3>{{$t("cars.subordinates")}}</h3>
+        <aside v-if="authUser.subordinates.length" class=" p-4">
+            <ul>
+                <li v-for="emp in authUser.subordinates" :key="emp.id">
+                    <div v-if="emp.deliveries?.length">
+                      <button @click="emp.collapsed=!emp.collapsed">
+                        {{emp.collapsed ? '⏪' : '🚘'}}
+                    </button>
+                        {{ emp.name }}
+                       
+                        <table class="table" v-show="emp.collapsed">
+                  <thead>
+                    <th>{{$t("cars.carName")}}</th>
+                    <th>{{$t("cars.model")}}</th>
+                    <th>{{$t("cars.numberPlate")}}</th>
+                    <th>{{$t("cars.date")}}</th>
+                  </thead>
+                  <tbody>
+                    <tr v-for="delivery in emp.deliveries" :key="delivery.id">
+                      <td>{{ delivery?.asset?.category?.name }}</td>
+                      <td>{{ delivery?.asset?.model }}</td>
+                      <td>{{ delivery?.asset?.numberPlate }}</td>
+                      <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                    </div>
+                    <div v-else>
+                        {{ emp.name }}
+                    </div>
+                </li>
+            </ul>
+            </aside>
+    </div>
+    <div class="item ingredients">
+      <h1>Requests</h1>
+    </div>
+    <ul class="sponsors">
+     
+    </ul>
+  </div>

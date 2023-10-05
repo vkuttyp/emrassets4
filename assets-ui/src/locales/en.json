@@ -7,6 +7,13 @@
     "logout": "Logout"
     },
     "cars": {
-        "cars":"Cars"
+        "cars":"Cars",
+        "carName": "Name",
+        "model": "Model",
+        "numberPlate":"Number Plate",
+        "date": "Date",
+        "employeeName":"Name",
+        "subordinateName":"Name",
+        "subordinates":"Subordinates"
     }
 }
