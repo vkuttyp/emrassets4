@@ -1,20 +1,28 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable no-unused-vars -->
 <script setup>
+import { ref } from 'vue';
+import Dialog from '@/components/Dialog.vue';
+import Button from '@/components/Button.vue';
+import Modal from '@/components/Modal.vue';
 import { storeToRefs } from 'pinia'
 import uq from '@umalqura/core';
-import { useAssetsStore, useAuthStore } from '@/stores'
-const assetsStore = useAssetsStore()
-const { userAssets, subordinates } = storeToRefs(assetsStore)
+import { useCarsStore, useAuthStore } from '@/stores'
+const carsStore = useCarsStore()
+const { userCars, subordinates } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
 authUser.value.subordinates = subordinates
-authUser.value.deliveries = userAssets
+authUser.value.deliveries = userCars
 // const subordinates = storeToRefs(assetsStore);
-assetsStore.currentUserDeliveries()
-assetsStore.getSubordinates()
+carsStore.currentUserDeliveries()
+carsStore.getSubordinates()
 
+const isOpen = ref(false);
+const toggleModal = () => {
+  isOpen.value = !isOpen.value;
+};
 </script>
 
 <template src="./cars.html">

@@ -1,22 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Assets.Data.Models;
 
-namespace Assets.Data.Models;
-public class AssetRegion
-{
-    public int id { get; set; }
-    public string name { get; set; }
-    public int ParentId { get; set; }
-}
-public class AssetBoard //Cars or electronics
-{
-    public int id { get; set; }
-    public string Name { get; set; } = "";
-    public int RegionId { get; set; }
-}
+
 public class BoardUser
 {
     public int id { get; set; }
@@ -25,12 +9,8 @@ public class BoardUser
     public int BoardId { get; set; }
     public int VoteCount { get; set; }
 }
-public class AssetType
-{
-    public int id { get; set; }
-    public string name { get; set; }
-}
-public class AssetCategory
+
+public class CarCategory
 {
     public int id { get; set; }
     public string name { get; set; }
@@ -42,17 +22,11 @@ public class Department
     public int TypeId { get; set; }
     public int RegionId { get; set; }
 }
-public class Manufacturer
+
+public class Car
 {
     public int id { get; set; }
     public string name { get; set; }
-    public int AssetTypeId { get; set; }
-}
-public class Asset
-{
-    public int id { get; set; }
-    public string name { get; set; }
-    public int AssetTypeId { get; set; }
     public int CategoryId { get; set; }
     public string Model { get; set; }
     public int ManufactureYear { get; set; }
@@ -62,18 +36,16 @@ public class Asset
     public string Description { get; set; }
     public int RegionId { get; set; }
     public int LocationId { get; set; }
-    public AssetType AssetType { get; set; }
-    public AssetCategory Category { get; set; }
+    public CarCategory Category { get; set; }
 }
 
-public class AssetRequest
+public class CarRequest
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
     public int SerialNo { get; set; }
     public DateTime RequestDate { get; set; } = DateTime.Now;
     public int UserId { get; set; }
     public int RegionId { get; set; }
-    public string AssetId { get; set; }
     public string RequestDetail { get; set; } = "";
     public string Notes { get; set; } = "";
     public int DepartmentId { get; set; }
@@ -111,7 +83,7 @@ public class FinalApproval
     public int StatusId { get; set; }
     public string Notes { get; set; } = "";
 }
-public class AssetDelivery
+public class CarDeliveryDetail
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
     public int DeliveredTo { get; set; }
@@ -120,14 +92,6 @@ public class AssetDelivery
     public string DocNo { get; set; } = "";
     public int UserId { get; set; }
     public string Notes { get; set; } = "";
-    public int AssetId { get; set; }
-    public Asset Asset { get; set; }
-}
-public class AssetReturn
-{
-    public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
-    public DateTime ReturnDate { get; set; }
-    public int AssetId { get; set; }
-    public string DocNo { get; set; } = "";
-    public int ReceivedBy { get; set; }
+    public int CarId { get; set; }
+    public Car Car { get; set; }
 }

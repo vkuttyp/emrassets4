@@ -161,9 +161,9 @@ public class MyDb : IMyDb
         }
         return null;
     }
-    public async Task<List<AssetDelivery>?> AssetDeliveriesByBeneficiary(int userId, int beneficiaryId)
+    public async Task<List<CarDeliveryDetail>?> CarDeliveryDetailsByBeneficiary(int userId, int beneficiaryId)
     {
-        using (var cmd = MyCommand.CmdProc("AssetDeliveriesByBeneficiary", connectionString))
+        using (var cmd = MyCommand.CmdProc("CarDeliveryDetailsByBeneficiary", connectionString))
         {
             cmd.Parameters.AddWithValue("@BeneficiaryId", beneficiaryId);
             cmd.Parameters.AddWithValue("@userId", userId);
@@ -174,7 +174,7 @@ public class MyDb : IMyDb
                 var json = await MyCommand.GetJson(reader);
                 if (!string.IsNullOrWhiteSpace(json.ToString()))
                 {
-                    return JsonSerializer.Deserialize<List<AssetDelivery>>(json);
+                    return JsonSerializer.Deserialize<List<CarDeliveryDetail>>(json);
                 }
             }
         }
@@ -206,12 +206,12 @@ public class MyDb : IMyDb
         connectionString = _config["AppSettings:ConnectionString"]!;
     }
 
-   
+
 }
 public interface IMyDb
 {
     //Task<User?> Login(LoginData? login);
- 
+
     Task<ArpUser?> GetOracleUser(int idNo);
     Task UpdateLoginHistory(int loginType, string machineName, string loginId, int statusId);
     //Task<User?> LoginByADInfo(ADUserInfo user);
@@ -219,6 +219,6 @@ public interface IMyDb
     Task<ArpUser?> GetArpUserTreeByUser(int userId);
     Task<List<string>> GetIds();
     Task<ArpUser?> Login(int userId, string password);
-    Task<List<AssetDelivery>?> AssetDeliveriesByBeneficiary(int userId, int beneficieryId);
+    Task<List<CarDeliveryDetail>?> CarDeliveryDetailsByBeneficiary(int userId, int beneficieryId);
     Task<List<ArpUser>?> SubordinateDetails(int userId);
 }

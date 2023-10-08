@@ -1,3 +1,3 @@
 export * from './auth.store';
 export * from './users.store';
-export * from './assetsStore';
+export * from './carsStore';
