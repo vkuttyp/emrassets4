@@ -54,5 +54,15 @@ namespace Assets.Api.Controllers
 
             return Ok(subordinates);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RequestCar([FromBody]CarRequest request)
+        {
+            int userId;
+            int.TryParse(User.FindFirst("UserId")?.Value, out userId);
+            request.UserId = userId;
+            request=await _db.CarRequestUpdate(request);
+            return Ok(request);
+        }
     }
 }

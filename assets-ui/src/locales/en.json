@@ -15,5 +15,10 @@
         "employeeName":"Name",
         "subordinateName":"Name",
         "subordinates":"Subordinates"
+    },
+    "carRequest": {
+        "details":"Request Details",
+        "notes":"Request notes",
+        "save":"Save"
     }
 }

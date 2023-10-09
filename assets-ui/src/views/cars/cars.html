@@ -5,30 +5,8 @@
 @close-modal="toggleModal">
 <pre>{{authUser}}</pre>
 </Modal> -->
-<Dialog 
-:open="isOpen" 
-@close="toggleModal"
->
-
-<!-- Dialog Header -->
-<template #header>
-  <h2 class="font-bold text-lg text-center">Dialog Title</h2>
-</template>
-
-<!-- Dialog Content -->
-<template #content>
- <pre>{{authUser}}</pre>
-</template>
-
-<!-- Dialog Footer -->
-<template #footer>
-  <div class="text-center space-x-4">
-    <Button @click="toggleModal">Close</Button>
-  </div>
-</template>
-
-</Dialog>
-<Button @click="toggleModal">Primary Button</Button>
+<CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError"></CarRequest>
+<Button @click="isOpen=true">Primary Button</Button>
 
 <div class="container font-cairo">
     <h1 class="item">

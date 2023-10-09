@@ -15,5 +15,10 @@
         "employeeName":"الاسم",
         "subordinateName":"الاسم",
         "subordinates":"الموظفين"
+    },
+    "carRequest": {
+        "details":"تفاصيل الطلب",
+        "notes":"الغرض من الطلب",
+        "save":"حفظ"
     }
 }

@@ -8,7 +8,8 @@ export const useCarsStore = defineStore({
     id: 'cars',
     state: () => ({
         userCars: {},
-        subordinates: {}
+        subordinates: {},
+        carRequest: {}
     }),
     actions: {
         // async getByBeneficieries(beneficieryId) {
@@ -42,6 +43,12 @@ export const useCarsStore = defineStore({
                     //  console.log(this.users)
                 })
                 .catch(error => this.subordinates = { error })
-        }
+        },
+        async requestCar(requestDetail, notes) {
+            this.carRequest = { loading: true}
+            return await fetchWrapper.post(`${baseUrl}/RequestCar`, { requestDetail, notes })
+            .catch(error => this.carRequest = { error})
+         
+        },
     }
 });

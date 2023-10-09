@@ -2,9 +2,9 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import { ref } from 'vue';
-import Dialog from '@/components/Dialog.vue';
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
+import { CarRequest } from '..';
 import { storeToRefs } from 'pinia'
 import uq from '@umalqura/core';
 import { useCarsStore, useAuthStore } from '@/stores'
@@ -23,6 +23,14 @@ const isOpen = ref(false);
 const toggleModal = () => {
   isOpen.value = !isOpen.value;
 };
+const requestSaved = (data) => {
+  isOpen.value=false
+  console.log(data);
+};
+const requestError = (data) => {
+  console.log(data);
+};
+
 </script>
 
 <template src="./cars.html">

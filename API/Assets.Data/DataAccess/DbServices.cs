@@ -198,6 +198,26 @@ public class MyDb : IMyDb
         }
         return null;
     }
+
+    public async Task<CarRequest?> CarRequestUpdate(CarRequest request)
+    {
+        using (var cmd = MyCommand.CmdProc("CarRequests_Update", connectionString))
+        {
+            var parjson = MyCommand.ToJson(request);
+            cmd.Parameters.AddWithValue("@json", parjson);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<CarRequest>(json);
+                }
+            }
+        }
+        return null;
+    }
     readonly IConfiguration _config;
     string connectionString;
     public MyDb(IConfiguration configuration)
@@ -221,4 +241,5 @@ public interface IMyDb
     Task<ArpUser?> Login(int userId, string password);
     Task<List<CarDeliveryDetail>?> CarDeliveryDetailsByBeneficiary(int userId, int beneficieryId);
     Task<List<ArpUser>?> SubordinateDetails(int userId);
+    Task<CarRequest?> CarRequestUpdate(CarRequest request);
 }
