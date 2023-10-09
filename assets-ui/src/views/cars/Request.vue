@@ -37,8 +37,10 @@ async function onSubmit(values) {
             apiError.value=data.error;
             // setErrors({ apiError: data.error });
             }
-            else
+            else{
+            apiError.value=null;
             emit('saved',data);
+            }
         })
         .catch(error => {
             emit('error', error);

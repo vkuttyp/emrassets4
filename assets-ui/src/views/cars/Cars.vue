@@ -40,7 +40,7 @@ const requestError = (data) => {
 
 /* https://hidde.blog/more-accessible-markup-with-display-contents/ */
 body {
-  font-family: 'Cairo';
+  font-family: 'Aljazeera';
 }
 .container  { 
   background-color: #EFEFFF;

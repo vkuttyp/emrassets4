@@ -3,7 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* arabic */
+/* arabic Aljazeera.ttf */
+@font-face {
+  font-family: 'Aljazeera';
+  src: url('./fonts/Aljazeera.ttf') format('truetype');
+}
+
 @font-face {
   font-family: 'Cairo';
   font-style: normal;

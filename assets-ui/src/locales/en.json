@@ -6,6 +6,10 @@
     
     "logout": "Logout"
     },
+    "common": {
+        "ar":"Arabic",
+        "en":"English"
+    },
     "cars": {
         "cars":"Cars",
         "carName": "Name",

@@ -2,15 +2,16 @@ import {RouterView,  createRouter, createWebHistory } from 'vue-router';
 
 import { useAuthStore } from '@/stores';
 import { HomeView, Login, Logout, Cars, Dashboard } from '@/views';
-import i18n from '../locales/i18';
+import i18n  from '@/locales/i18.js';
+const locale = i18n.locale ?? 'ar';
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     linkActiveClass: 'active',
     routes: [
         {
             path: '/',
-            // redirect: `/${i18n.locale}/`
-            redirect: '/ar/'
+            // redirect: `/${i18n.locale}`
+            redirect: '/${locale}'
         },
        {
         path: '/:lang',
@@ -18,6 +19,11 @@ export const router = createRouter({
         children: [
         { 
             path: '',
+            name: 'home',
+            component: Dashboard
+        },
+        { 
+            path: 'dashboard',
             name: 'home',
             component: Dashboard
         },
@@ -50,7 +56,8 @@ router.beforeEach(async (to) => {
 
     if (authRequired && !auth.user) {
         auth.returnUrl = to.fullPath;
-        return '/ar/login';
+        // return '/ar/login';
+        return `/${locale}/login`;
     }
 });
 

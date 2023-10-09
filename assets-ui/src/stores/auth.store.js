@@ -24,7 +24,7 @@ export const useAuthStore = defineStore({
 
             // redirect to previous url or default to home page
           
-            router.push(this.returnUrl || '/');
+            router.push(this.returnUrl || '/ar/dashboard');
         },
         logout() {
             this.user = null;

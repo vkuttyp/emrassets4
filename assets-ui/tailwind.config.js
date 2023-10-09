@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 export default {
   content: [
     "./index.html",
@@ -7,9 +8,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        cairo: ['Cairo', 'sans-serif'],
+        Aljazeera: ['Cairo', 'sans-serif'],
       },
+      
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addBase }) {
+      addBase({
+         'html': { fontSize: "16px" },
+       })
+     }),
+  ],
 }

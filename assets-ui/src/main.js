@@ -8,6 +8,7 @@ import  i18n  from './locales/i18'
 
 import App from './App.vue'
 import router from './helpers/router'
+import VueClickAway from "vue3-click-away";
 
 router.beforeEach((to, from, next)=> {
     let language = to.params.lang;
@@ -21,4 +22,5 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(VueClickAway);
 app.mount('#app')
