@@ -12,17 +12,17 @@ export const useCarsStore = defineStore({
         carRequest: {}
     }),
     actions: {
-        // async getByBeneficieries(beneficieryId) {
-        //     this.userAssets = { loading: true };
-        //     let url = `${baseUrl}/AssetDeliveriesByBeneficiary/${beneficieryId}`;
-        //     fetchWrapper.get(url)
-        //         .then(assets => { 
-        //             this.userAssets = assets;
-        //             // this.getSubordinates();
-        //             //  console.log(this.users)
-        //         })
-        //         .catch(error => this.userAssets = { error })
-        // },
+        async carRequestDetailsByBeneficiary(beneficieryId) {
+            this.carRequest = { loading: true };
+            let url = `${baseUrl}/CarRequestDetailsByBeneficiary/${beneficieryId}`;
+            return await fetchWrapper.get(url)
+                // .then(data => { 
+                //     this.carRequest = data;
+                //     // this.getSubordinates();
+                //     //  console.log(this.users)
+                // })
+                .catch(error => this.carRequest = { error })
+        },
         async currentUserDeliveries() {
             this.userCars = { loading: true };
             let url = `${baseUrl}/CarDeliveriesForCurrentUser`;

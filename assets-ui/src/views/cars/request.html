@@ -5,8 +5,8 @@
 
 <!-- Dialog Header -->
 <template #header>
-    <button @click="isOpen=false">X</button>
-  <h2 class="font-bold text-lg text-center">New CAr Request</h2>
+    <button @click="toggleModal">X</button>
+  <h2 class="font-bold text-lg text-center">{{$t("cars.request")}}</h2>
 </template>
 
 <!-- Dialog Content -->

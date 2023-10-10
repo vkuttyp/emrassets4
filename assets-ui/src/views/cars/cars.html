@@ -5,68 +5,82 @@
 @close-modal="toggleModal">
 <pre>{{authUser}}</pre>
 </Modal> -->
-<CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError"></CarRequest>
-<Button @click="isOpen=true">Primary Button</Button>
-
-<div class="container font-Aljazeera">
-    <h1 class="item">
-        <p class="text-2xl p-3">{{ authUser.name }}</p>
-        <table class="table">
-            <thead>
-              <th>{{$t("cars.carName")}}</th>
-              <th>{{$t("cars.model")}}</th>
-              <th>{{$t("cars.numberPlate")}}</th>
-              <th>{{$t("cars.date")}}</th>
-            </thead>
-            <tbody>
-              <tr v-for="delivery in authUser.deliveries" :key="delivery.id">
-                <td>{{ delivery?.car?.category?.name }}</td>
-                <td>{{ delivery?.car?.model }}</td>
-                <td>{{ delivery?.car?.numberPlate }}</td>
-                <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
-              </tr>
-            </tbody>
-          </table>
-    </h1>
-    <div class="item content">
-      <h3>{{$t("cars.subordinates")}}</h3>
-        <aside v-if="authUser.subordinates.length" class=" p-4">
-            <ul>
-                <li v-for="emp in authUser.subordinates" :key="emp.id">
-                    <div v-if="emp.deliveries?.length">
-                      <button @click="emp.collapsed=!emp.collapsed">
-                        {{emp.collapsed ? '⏪' : '🚘'}}
-                    </button>
-                        {{ emp.name }}
-                       
-                        <table class="table" v-show="emp.collapsed">
-                  <thead>
-                    <th>{{$t("cars.carName")}}</th>
-                    <th>{{$t("cars.model")}}</th>
-                    <th>{{$t("cars.numberPlate")}}</th>
-                    <th>{{$t("cars.date")}}</th>
-                  </thead>
-                  <tbody>
-                    <tr v-for="delivery in emp.deliveries" :key="delivery.id">
-                      <td>{{ delivery?.car?.category?.name }}</td>
-                      <td>{{ delivery?.car?.model }}</td>
-                      <td>{{ delivery?.car?.numberPlate }}</td>
-                      <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                    </div>
-                    <div v-else>
-                        {{ emp.name }}
-                    </div>
-                </li>
-            </ul>
-            </aside>
+<div class="grid grid-cols-3 gap-4 m-4">
+<div>
+  <p class="text-2xl p-3">{{ authUser.name }}</p>
+  <div class="grid grid-cols-2 gap-4">
+    <div><strong>{{$t("cars.cars")}}</strong></div>
+    <div>
+      <CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
+      <Button @click="isOpen=true">{{$t("cars.request")}}</Button>
     </div>
-    <div class="item ingredients">
-      <h1>Requests</h1>
-    </div>
-    <ul class="sponsors">
-     
-    </ul>
   </div>
+  
+  
+  
+  <table class="table text-sm">
+    <thead>
+      <th>{{$t("cars.carName")}}</th>
+      <th>{{$t("cars.model")}}</th>
+      <th>{{$t("cars.numberPlate")}}</th>
+      <th>{{$t("cars.date")}}</th>
+    </thead>
+    <tbody>
+      <tr v-for="delivery in authUser.deliveries" :key="delivery.id">
+        <td>{{ delivery?.car?.category?.name }}</td>
+        <td>{{ delivery?.car?.model }}</td>
+        <td>{{ delivery?.car?.numberPlate }}</td>
+        <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <strong>{{$t("cars.subordinates")}}</strong>
+  <ul class="text-lg font-Aljazeera">
+    <li v-for="emp in authUser.subordinates" :key="emp.id">
+        <div v-if="emp.deliveries?.length">
+          <button @click="emp.collapsed=!emp.collapsed">
+            {{emp.collapsed ? '⏪' : '🚘'}}
+        </button>
+            {{ emp.name }}
+           
+            <table class="table text-sm" v-show="emp.collapsed">
+      <thead>
+        <th>{{$t("cars.carName")}}</th>
+        <th>{{$t("cars.model")}}</th>
+        <th>{{$t("cars.numberPlate")}}</th>
+        <th>{{$t("cars.date")}}</th>
+      </thead>
+      <tbody>
+        <tr v-for="delivery in emp.deliveries" :key="delivery.id">
+          <td>{{ delivery?.car?.category?.name }}</td>
+          <td>{{ delivery?.car?.model }}</td>
+          <td>{{ delivery?.car?.numberPlate }}</td>
+          <td>{{uq(delivery?.deliveryDate).format('yyyy/MM/dd')}}</td>
+        </tr>
+      </tbody>
+    </table>
+        </div>
+        <div v-else>
+            {{ emp.name }}
+        </div>
+    </li>
+</ul>
+</div>
+<div>
+  <h3>Requests</h3>
+ <table class="table">
+  <thead>
+    <th>Date</th>
+    <th>Details</th>
+  </thead>
+  <tbody>
+    <tr v-for="r in carRequests" :key="r.id">
+      <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
+      <td>{{r.requestDetail}}</td>
+    </tr>
+  </tbody>
+ </table>
+</div>
+</div>

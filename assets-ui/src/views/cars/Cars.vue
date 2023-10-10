@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
 import { CarRequest } from '..';
@@ -19,49 +19,47 @@ authUser.value.deliveries = userCars
 carsStore.currentUserDeliveries()
 carsStore.getSubordinates()
 
+// watch(authStore.user, (currentValue, oldValue) => {
+//       console.log(currentValue);
+//       console.log(oldValue);
+//     });
 const isOpen = ref(false);
 const toggleModal = () => {
   isOpen.value = !isOpen.value;
 };
 const requestSaved = (data) => {
   isOpen.value=false
-  console.log(data);
+ carRequests.value.push(data);
 };
+const requestModalClosed = ()=> {
+  isOpen.value=false;
+}
 const requestError = (data) => {
   console.log(data);
 };
 
+const carRequests = ref([]);
+async function getCarRequests() {
+    return await carsStore.carRequestDetailsByBeneficiary(authStore.user.id)
+        .then(data => {
+            if(data.error) {
+            // apiError.value=data.error;
+            // setErrors({ apiError: data.error });
+            console.log(data.error)
+            }
+            else{
+            carRequests.value=data;
+            }
+        })
+        .catch(error => {
+          console.log(error);
+          // setErrors({ apiError: error });
+        });
+}
+
+await getCarRequests();
 </script>
 
 <template src="./cars.html">
   
 </template>
-<style scoped>
-
-/* https://hidde.blog/more-accessible-markup-with-display-contents/ */
-body {
-  font-family: 'Aljazeera';
-}
-.container  { 
-  background-color: #EFEFFF;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1em;
-}
-  .container .item:nth-child(1) {
-    grid-column: 1 / 2;
-  }
-  .container .item:nth-child(2) {
-    grid-column: 2 / 3;
-  }
-
-.item {
-  padding: 1rem;
-}
-
-.content {
-  background-color: white;
-  margin: 1em 0;
-}
-
-</style>

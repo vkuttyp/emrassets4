@@ -8,10 +8,15 @@
     },
     "common": {
         "ar":"Arabic",
-        "en":"English"
+        "en":"English",
+        "siteName":"Al-Baha Emarah",
+        "dashboardTitle":"Dashboard",
+        "loginTitle":"Login Page",
+        "carsTitle":"Cars Page"
     },
     "cars": {
         "cars":"Cars",
+        "request":"Request New Car",
         "carName": "Name",
         "model": "Model",
         "numberPlate":"Number Plate",

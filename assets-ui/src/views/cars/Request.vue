@@ -11,7 +11,7 @@ import { useCarsStore } from '@/stores'
 import * as Yup from 'yup';
 
 
-const emit = defineEmits(["saved","error"]);
+const emit = defineEmits(["saved","error","closed"]);
 const props = defineProps({
     isOpen: {
       type: Boolean,
@@ -20,7 +20,8 @@ const props = defineProps({
   });
 
   const toggleModal = () => {
-//   isOpen.value = !isOpen.value;
+    apiError.value=null;
+  emit("closed")
 };
 const schema = Yup.object().shape({
     requestDetail: Yup.string().required('detail is required'),

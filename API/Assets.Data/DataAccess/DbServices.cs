@@ -218,6 +218,26 @@ public class MyDb : IMyDb
         }
         return null;
     }
+
+    public async Task<List<CarRequest>?> CarRequestDetailsByBeneficiary(int userId, int beneficiaryId)
+    {
+        using (var cmd = MyCommand.CmdProc("CarRequestDetailsByBeneficiary", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@BeneficiaryId", beneficiaryId);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<List<CarRequest>>(json);
+                }
+            }
+        }
+        return null;
+    }
     readonly IConfiguration _config;
     string connectionString;
     public MyDb(IConfiguration configuration)
@@ -242,4 +262,5 @@ public interface IMyDb
     Task<List<CarDeliveryDetail>?> CarDeliveryDetailsByBeneficiary(int userId, int beneficieryId);
     Task<List<ArpUser>?> SubordinateDetails(int userId);
     Task<CarRequest?> CarRequestUpdate(CarRequest request);
+    Task<List<CarRequest>?> CarRequestDetailsByBeneficiary(int userId, int beneficieryId);
 }

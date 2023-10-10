@@ -2,8 +2,9 @@ import {RouterView,  createRouter, createWebHistory } from 'vue-router';
 
 import { useAuthStore } from '@/stores';
 import { HomeView, Login, Logout, Cars, Dashboard } from '@/views';
-import i18n  from '@/locales/i18.js';
+import i18n  from '../locales/i18.js';
 const locale = i18n.locale ?? 'ar';
+
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     linkActiveClass: 'active',
@@ -19,28 +20,33 @@ export const router = createRouter({
         children: [
         { 
             path: '',
-            name: 'home',
-            component: Dashboard
+            name: 'dashboard',
+            component: Dashboard,
+            meta: { title: i18n.global.t('common.dashboardTitle') }
         },
         { 
             path: 'dashboard',
             name: 'home',
-            component: Dashboard
+            component: Dashboard,
+            meta: { title: i18n.global.t('common.dashboardTitle') }
         },
         { 
             path: 'cars',
             name: 'cars',
-            component: Cars
+            component: Cars,
+            meta: { title: i18n.global.t('common.carsTitle') }
         },
         { 
             path: 'login',
             name: 'login',
-            component: Login
+            component: Login,
+            meta: { title: i18n.global.t('common.loginTitle') }
         },
         { 
             path: 'logout',
             name: 'logout',
-            component: Logout
+            component: Logout,
+            meta: { title: 'Logout' }
         },
     ]
        } 
@@ -49,6 +55,7 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+    
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = ['/ar/login'];
     const authRequired = !publicPages.includes(to.path);

@@ -11,6 +11,7 @@ import router from './helpers/router'
 import VueClickAway from "vue3-click-away";
 
 router.beforeEach((to, from, next)=> {
+    document.title = `${i18n.global.t('common.siteName')} - ${to.meta.title}`;
     let language = to.params.lang;
     if(!language) {
         language = 'ar'

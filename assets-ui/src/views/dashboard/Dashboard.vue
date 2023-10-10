@@ -1,8 +1,12 @@
 <template>
-    <div>
-        <cars />
-      
-    </div>
+   <suspense>
+      <template #default>
+        <Cars />
+      </template>
+      <template #fallback>
+       <p>Loading</p>
+      </template>
+    </suspense>
 </template>
 
 <script setup>

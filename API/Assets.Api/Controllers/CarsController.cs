@@ -64,5 +64,18 @@ namespace Assets.Api.Controllers
             request=await _db.CarRequestUpdate(request);
             return Ok(request);
         }
+
+        [HttpGet("{beneficieryId}")]
+        public async Task<IActionResult> CarRequestDetailsByBeneficiary(int beneficieryId)
+        {
+            if (beneficieryId == 0)
+                return BadRequest();
+            int userId;
+            int.TryParse(User.FindFirst("UserId")?.Value, out userId);
+            var deliveries = await _db.CarRequestDetailsByBeneficiary(userId, beneficieryId);
+            if (deliveries is null) return NotFound();
+
+            return Ok(deliveries);
+        }
     }
 }
