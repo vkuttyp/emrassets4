@@ -51,12 +51,12 @@ public class CarRequest
     public int DepartmentId { get; set; }
 
 }
-public class ManagerResponse
+public class CarManagerResponse
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
     public int SerialNo { get; set; }
     public int ManagerId { get; set; }
-    public string RequestId { get; set; }
+    public string RequestId { get; set; } = "";
     public DateTime ResponseDate { get; set; } = DateTime.Now;
     public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";

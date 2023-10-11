@@ -9,19 +9,27 @@ export const useCarsStore = defineStore({
     state: () => ({
         userCars: {},
         subordinates: {},
-        carRequest: {}
+        carRequest: {},
+        responseTypes: {}
     }),
+    getters: {
+        subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
+      },
     actions: {
-        async carRequestDetailsByBeneficiary(beneficieryId) {
+        async carRequestDetailsByBeneficiary(beneficiaryId) {
             this.carRequest = { loading: true };
-            let url = `${baseUrl}/CarRequestDetailsByBeneficiary/${beneficieryId}`;
+            let url = `${baseUrl}/CarRequestDetailsByBeneficiary/${beneficiaryId}`;
             return await fetchWrapper.get(url)
-                // .then(data => { 
-                //     this.carRequest = data;
-                //     // this.getSubordinates();
-                //     //  console.log(this.users)
-                // })
-                .catch(error => this.carRequest = { error })
+            .catch(error => this.carRequest = { error })
+        },
+        async getResponseTypes(typeId) {
+            this.responseTypes = { loading: true };
+            let url = `${baseUrl}/GetListItems/${typeId}`;
+             await fetchWrapper.get(url)
+             .then(items => {
+                this.responseTypes=items;
+             })
+            .catch(error => this.responseTypes = { error })
         },
         async currentUserDeliveries() {
             this.userCars = { loading: true };
@@ -48,7 +56,13 @@ export const useCarsStore = defineStore({
             this.carRequest = { loading: true}
             return await fetchWrapper.post(`${baseUrl}/RequestCar`, { requestDetail, notes })
             .catch(error => this.carRequest = { error})
-         
+        },
+
+        //Manager Response:
+        async carManagerResponse(responseTypeId, notes) {
+            this.carRequest = { loading: true}
+            return await fetchWrapper.post(`${baseUrl}/ResponseCar`, { responseTypeId, notes })
+            .catch(error => this.carRequest = { error})
         },
     }
 });

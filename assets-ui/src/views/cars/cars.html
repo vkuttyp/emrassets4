@@ -8,12 +8,18 @@
 <div class="grid grid-cols-3 gap-4 m-4">
 <div>
   <p class="text-2xl p-3">{{ authUser.name }}</p>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-3 gap-4">
     <div><strong>{{$t("cars.cars")}}</strong></div>
     <div>
       <CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
       <Button @click="isOpen=true">{{$t("cars.request")}}</Button>
     </div>
+
+    <div>
+      <ManagerResponse :isOpen="isOpen2" @saved="requestSaved2" @error="requestError2" @closed="requestModalClosed2"></ManagerResponse>
+      <Button @click="isOpen2=true">{{$t("cars.request")}}</Button>
+    </div>
+
   </div>
   
   
@@ -26,7 +32,7 @@
       <th>{{$t("cars.date")}}</th>
     </thead>
     <tbody>
-      <tr v-for="delivery in authUser.deliveries" :key="delivery.id">
+      <tr v-for="delivery in authUser.carDeliveries" :key="delivery.id">
         <td>{{ delivery?.car?.category?.name }}</td>
         <td>{{ delivery?.car?.model }}</td>
         <td>{{ delivery?.car?.numberPlate }}</td>
@@ -35,11 +41,12 @@
     </tbody>
   </table>
 </div>
+<!-- Subordinates: -->
 <div>
   <strong>{{$t("cars.subordinates")}}</strong>
   <ul class="text-lg font-Aljazeera">
     <li v-for="emp in authUser.subordinates" :key="emp.id">
-        <div v-if="emp.deliveries?.length">
+        <div v-if="emp.carDeliveries?.length">
           <button @click="emp.collapsed=!emp.collapsed">
             {{emp.collapsed ? '⏪' : '🚘'}}
         </button>
@@ -53,7 +60,7 @@
         <th>{{$t("cars.date")}}</th>
       </thead>
       <tbody>
-        <tr v-for="delivery in emp.deliveries" :key="delivery.id">
+        <tr v-for="delivery in emp.carDeliveries" :key="delivery.id">
           <td>{{ delivery?.car?.category?.name }}</td>
           <td>{{ delivery?.car?.model }}</td>
           <td>{{ delivery?.car?.numberPlate }}</td>
@@ -67,9 +74,30 @@
         </div>
     </li>
 </ul>
+<!-- Subordinate requests: -->
+<h2>Subordinate requests:</h2>
+ <ul>
+  <li v-for="emp in subordinateCarRequests" :key="emp.id">
+    {{emp.name}}
+    <table class="table text-sm">
+      <thead>
+        <th>date</th>
+        <th>detail</th>
+     
+      </thead>
+      <tbody>
+        <tr v-for="request in emp.carRequests" :key="request.id">
+          <td>{{ uq(request.requestDate).format('yyyy/MM/dd') }}</td>
+          <td>{{ request.requestDetail }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+ </ul>
 </div>
 <div>
   <h3>Requests</h3>
+  
  <table class="table">
   <thead>
     <th>Date</th>

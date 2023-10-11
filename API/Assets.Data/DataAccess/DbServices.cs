@@ -1,4 +1,5 @@
 ﻿using Assets.Data.Models;
+using Azure;
 using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using System.Runtime;
@@ -8,6 +9,13 @@ namespace Assets.Data.DataAccess;
 
 public class MyDb : IMyDb
 {
+    readonly IConfiguration _config;
+    string connectionString;
+    public MyDb(IConfiguration configuration)
+    {
+        _config = configuration;
+        connectionString = _config["AppSettings:ConnectionString"]!;
+    }
     string GetVal(string val) => _config.GetSection("Oracle")[val]!;
     string OracleConnString => $"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST={GetVal("host")})(PORT={GetVal("port")}))(CONNECT_DATA=(SID={GetVal("sid")})));User Id={GetVal("user")};Password={GetVal("password")};";
     public async Task<ArpUser?> GetOracleUser(int idNo)
@@ -238,14 +246,45 @@ public class MyDb : IMyDb
         }
         return null;
     }
-    readonly IConfiguration _config;
-    string connectionString;
-    public MyDb(IConfiguration configuration)
-    {
-        _config = configuration;
-        connectionString = _config["AppSettings:ConnectionString"]!;
-    }
 
+    public async Task<CarManagerResponse?> CarManagerResponseUpdate(CarManagerResponse response)
+    {
+        using (var cmd = MyCommand.CmdProc("CarManagerResponse_Update", connectionString))
+        {
+            var parjson = MyCommand.ToJson(response);
+            cmd.Parameters.AddWithValue("@json", parjson);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<CarManagerResponse>(json);
+                }
+            }
+        }
+        return null;
+    }
+    public async Task<List<MyListItem>> GetListItems(int typeId, int userId)
+    {
+        List<MyListItem> list = new();
+        using (var cmd = MyCommand.CmdProc("ListItem_Select", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@typeId", typeId);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                while(await reader.ReadAsync())
+                {
+                    list.Add(new MyListItem(reader.GetInt32(0), reader.GetString(1)));
+                }
+                return list;
+            }
+        }
+    }
 
 }
 public interface IMyDb
@@ -263,4 +302,7 @@ public interface IMyDb
     Task<List<ArpUser>?> SubordinateDetails(int userId);
     Task<CarRequest?> CarRequestUpdate(CarRequest request);
     Task<List<CarRequest>?> CarRequestDetailsByBeneficiary(int userId, int beneficieryId);
+
+    Task<CarManagerResponse?> CarManagerResponseUpdate(CarManagerResponse response);
+    Task<List<MyListItem>> GetListItems(int typeId, int userId);
 }

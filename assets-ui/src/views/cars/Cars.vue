@@ -4,21 +4,21 @@
 import { ref, watch } from 'vue';
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
-import { CarRequest } from '..';
+import { CarRequest, ManagerResponse } from '..';
 import { storeToRefs } from 'pinia'
 import uq from '@umalqura/core';
 import { useCarsStore, useAuthStore } from '@/stores'
 const carsStore = useCarsStore()
-const { userCars, subordinates } = storeToRefs(carsStore)
+const { userCars, subordinates, subordinateCarRequests, responseTypes } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
 authUser.value.subordinates = subordinates
-authUser.value.deliveries = userCars
+authUser.value.carDeliveries = userCars
 // const subordinates = storeToRefs(assetsStore);
 carsStore.currentUserDeliveries()
 carsStore.getSubordinates()
-
+carsStore.getResponseTypes(1);
 // watch(authStore.user, (currentValue, oldValue) => {
 //       console.log(currentValue);
 //       console.log(oldValue);
@@ -38,6 +38,20 @@ const requestError = (data) => {
   console.log(data);
 };
 
+const isOpen2 = ref(false);
+const toggleModal2 = () => {
+  isOpen2.value = !isOpen.value;
+};
+const requestSaved2 = (data) => {
+  isOpen2.value=false
+ carRequests.value.push(data);
+};
+const requestModalClosed2 = ()=> {
+  isOpen2.value=false;
+}
+const requestError2 = (data) => {
+  console.log(data);
+};
 const carRequests = ref([]);
 async function getCarRequests() {
     return await carsStore.carRequestDetailsByBeneficiary(authStore.user.id)
@@ -45,14 +59,14 @@ async function getCarRequests() {
             if(data.error) {
             // apiError.value=data.error;
             // setErrors({ apiError: data.error });
-            console.log(data.error)
+            // console.log(data.error)
             }
             else{
             carRequests.value=data;
             }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
           // setErrors({ apiError: error });
         });
 }

@@ -1,0 +1,59 @@
+<Dialog 
+:open="isOpen" 
+@close="toggleModal"
+>
+
+<!-- Dialog Header -->
+<template #header>
+    <button @click="toggleModal">X</button>
+  <h2 class="font-bold text-lg text-center">{{$t("cars.request")}}</h2>
+  <pre>{{selectedItem}}</pre>
+</template>
+
+<!-- Dialog Content -->
+<template #content>
+    <div>
+    
+        <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
+            <div class="form-group">
+                <label>{{ $t("carRequest.details") }}</label>
+                <!-- <Field name="responseTypeId"  v-slot="{ selectedItem }" as="select">
+                    <option value="" disabled>Select a type</option>
+                    <option v-for="o in carsStore.responseTypes" :value="selectedItem" :key="o.id">{{o.name}}</option>
+               
+                  </Field> -->
+                  <Field name="responseTypeId" v-slot="{ field }" v-model="selectedItem">
+                    <select :options="carsStore.responseTypes" label="name" :reduce="mediaType => mediaType.id" v-bind="field">
+                    </select>
+                </Field>
+               
+            </div>            
+            <div class="form-group">
+                <label>{{ $t("carRequest.notes") }}</label>
+                <Field name="notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
+                <div class="invalid-feedback">{{errors.notes}}</div>
+            </div>            
+            <div class="form-group">
+                <button class="btn btn-primary" :disabled="isSubmitting">
+                    <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ $t("carRequest.save") }}
+                </button>
+            </div>
+            <div v-if="errors?.apiError" class="alert alert-danger mt-3 mb-0">{{errors?.apiError?.Title}}</div>
+            <!--  -->
+        </Form>
+    </div>
+<!-- <CarRequest @saved="requestSaved" @error="requestError"></CarRequest> -->
+</template>
+
+<!-- Dialog Footer -->
+<template #footer>
+  <div class="text-center space-x-4">
+    <!-- <Button @click="toggleModal">Close</Button> -->
+   
+  </div>
+  <div v-if="apiError" class="alert alert-danger mt-3 mb-0">{{apiError?.Title}}</div>
+  <!--  -->
+</template>
+
+</Dialog>
