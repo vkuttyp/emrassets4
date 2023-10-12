@@ -59,9 +59,9 @@ export const useCarsStore = defineStore({
         },
 
         //Manager Response:
-        async carManagerResponse(responseTypeId, notes) {
+        async carManagerResponse(managerResponse) {
             this.carRequest = { loading: true}
-            return await fetchWrapper.post(`${baseUrl}/ResponseCar`, { responseTypeId, notes })
+            return await fetchWrapper.post(`${baseUrl}/ResponseCar`, managerResponse)
             .catch(error => this.carRequest = { error})
         },
     }

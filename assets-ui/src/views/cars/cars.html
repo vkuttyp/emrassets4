@@ -5,6 +5,8 @@
 @close-modal="toggleModal">
 <pre>{{authUser}}</pre>
 </Modal> -->
+<ManagerResponse :carManagerResponse="carManagerResponse" :requestId="requestId" :isOpen="isOpen2" @saved="requestSaved2" @error="requestError2" @closed="requestModalClosed2"></ManagerResponse>
+
 <div class="grid grid-cols-3 gap-4 m-4">
 <div>
   <p class="text-2xl p-3">{{ authUser.name }}</p>
@@ -15,10 +17,6 @@
       <Button @click="isOpen=true">{{$t("cars.request")}}</Button>
     </div>
 
-    <div>
-      <ManagerResponse :isOpen="isOpen2" @saved="requestSaved2" @error="requestError2" @closed="requestModalClosed2"></ManagerResponse>
-      <Button @click="isOpen2=true">{{$t("cars.request")}}</Button>
-    </div>
 
   </div>
   
@@ -83,12 +81,18 @@
       <thead>
         <th>date</th>
         <th>detail</th>
-     
+        <th>Action</th>
+        <th>Response</th>
       </thead>
       <tbody>
         <tr v-for="request in emp.carRequests" :key="request.id">
           <td>{{ uq(request.requestDate).format('yyyy/MM/dd') }}</td>
           <td>{{ request.requestDetail }}</td>
+          <td>
+            <!-- (event) => warn('Form cannot be submitted yet.', event) -->
+            <button @click.prevent="approveClicked(request)">Approve</button>
+          </td>
+          <td>{{request.carManagerResponse.managerResponseType?.name}}</td>
         </tr>
       </tbody>
     </table>

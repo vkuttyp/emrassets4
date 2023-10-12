@@ -62,8 +62,11 @@ public class MyListItem
         this.id = id;
         this.name = name;
     }
-
+    public MyListItem()
+    {
+        
+    }
     public int id { get; set; }
-    public string name { get; set; }
+    public string? name { get; set; }
 }
 public record Problem(int Status, string Type, string Title, string Detail);

@@ -49,7 +49,7 @@ public class CarRequest
     public string RequestDetail { get; set; } = "";
     public string Notes { get; set; } = "";
     public int DepartmentId { get; set; }
-
+    public CarManagerResponse CarManagerResponse { get; set; }=new CarManagerResponse();
 }
 public class CarManagerResponse
 {
@@ -60,7 +60,7 @@ public class CarManagerResponse
     public DateTime ResponseDate { get; set; } = DateTime.Now;
     public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";
-
+    public MyListItem? ManagerResponseType { get; set; } = new MyListItem();
 }
 public class BoardResponse
 {

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, reactive } from 'vue';
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
 import { CarRequest, ManagerResponse } from '..';
@@ -37,14 +37,24 @@ const requestModalClosed = ()=> {
 const requestError = (data) => {
   console.log(data);
 };
-
+const requestId = ref(null)
+const carManagerResponse = ref(null);
 const isOpen2 = ref(false);
+function approveClicked(request, event) {
+ carManagerResponse.value = request.carManagerResponse;
+  requestId.value=request.id;
+  isOpen2.value = !isOpen2.value;
+}
 const toggleModal2 = () => {
-  isOpen2.value = !isOpen.value;
+  isOpen2.value = !isOpen2.value;
 };
 const requestSaved2 = (data) => {
-  isOpen2.value=false
- carRequests.value.push(data);
+  isOpen2.value=false;
+  if(Array.isArray(subordinateCarRequests.value) && data) {
+  subordinateCarRequests.value.forEach(emp => {
+  emp.carRequests.find((request)=> request.id===data.requestId).carManagerResponse = data;
+ });
+  }
 };
 const requestModalClosed2 = ()=> {
   isOpen2.value=false;

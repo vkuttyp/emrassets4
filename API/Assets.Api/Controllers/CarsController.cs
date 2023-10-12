@@ -69,8 +69,7 @@ namespace Assets.Api.Controllers
                 return BadRequest();
             int userId;
             int.TryParse(User.FindFirst("UserId")?.Value, out userId);
-            var deliveries = await _db.CarRequestDetailsByBeneficiary(userId, beneficiaryId);
-            if (deliveries is null) return NotFound();
+            var deliveries = await _db.CarRequestDetailsByBeneficiary(userId, beneficiaryId) ?? new List<CarRequest>();
 
             return Ok(deliveries);
         }

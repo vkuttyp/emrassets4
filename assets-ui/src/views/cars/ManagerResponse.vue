@@ -4,7 +4,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Form, Field } from 'vee-validate';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import Dialog from '@/components/Dialog.vue';
 import Button from '@/components/Button.vue';
 import { useCarsStore } from '@/stores'
@@ -17,21 +17,34 @@ const props = defineProps({
       type: Boolean,
       default: false,
     },
+    requestId: {
+      type: String,
+      default: '33222',
+      required: false
+    },
+    carManagerResponse: {
+      type: Object
+    }
   });
   const selectedItem = ref(null);
   const toggleModal = () => {
     apiError.value=null;
   emit("closed")
 };
+
 const schema = Yup.object().shape({
+  requestId: Yup.string(),
     responseTypeId: Yup.number().moreThan(0),
     notes: Yup.string().required('notes is required'),
 });
 const apiError = ref(null)
 async function onSubmit(values) {
-   
     const { responseTypeId, notes } = values;
-    return await carsStore.carManagerResponse(responseTypeId, notes)
+    var mresponse= props.carManagerResponse;
+    mresponse.requestId=props.requestId;
+    mresponse.responseTypeId=responseTypeId;
+    mresponse.notes=notes;
+    return await carsStore.carManagerResponse(mresponse)
         .then(data => {
             if(data.error) {
             emit('error',data.error);

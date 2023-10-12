@@ -17,20 +17,31 @@
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
             <div class="form-group">
                 <label>{{ $t("carRequest.details") }}</label>
-                <!-- <Field name="responseTypeId"  v-slot="{ selectedItem }" as="select">
-                    <option value="" disabled>Select a type</option>
-                    <option v-for="o in carsStore.responseTypes" :value="selectedItem" :key="o.id">{{o.name}}</option>
                
-                  </Field> -->
-                  <Field name="responseTypeId" v-slot="{ field }" v-model="selectedItem">
-                    <select :options="carsStore.responseTypes" label="name" :reduce="mediaType => mediaType.id" v-bind="field">
-                    </select>
-                </Field>
+                  <!-- <Field name="responseTypeId" as="select" class="form-control" >
+                    <option value="">
+                        Select an Item
+                    </option>
+                    <option v-for="t in carsStore.responseTypes" :key="t.id" :value="t.id" :selected="selectedItem && selectedItem.id==t.id">
+                        {{t.name}}
+                    </option>
+                </Field> -->
+                
+                    <table class="table">
+                        <tr>
+                        <td v-for="t in carsStore.responseTypes" :key="t.id"> 
+                            
+                            <Field name="responseTypeId"  type="radio" :checked="t.id === carManagerResponse.responseTypeId" v-model="carManagerResponse.responseTypeId" :value="t.id" />
+                            {{ t.name }}
+                        </td>
+                    </tr>
+                    </table>
+                    <ErrorMessage name="responseTypeId" />
                
             </div>            
             <div class="form-group">
                 <label>{{ $t("carRequest.notes") }}</label>
-                <Field name="notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
+                <Field name="notes" :value="props.carManagerResponse.notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
                 <div class="invalid-feedback">{{errors.notes}}</div>
             </div>            
             <div class="form-group">
