@@ -64,7 +64,7 @@ public class CarManagerResponse
     public MyListItem? ManagerResponseType { get; set; } = new MyListItem();
     public CarRequest? CarRequest { get; set; }
     public ArpUser? Manager { get; set; }
-    public List<CarVotingDetail>? Votings { get; set; }
+    public List<CarVotingDetail>? Votings { get; set; } = new();
 }
 public class CarVotingDetail
 {
