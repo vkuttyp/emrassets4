@@ -1,0 +1,42 @@
+
+<div class="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
+    <div class="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+       <div class="bg-white rounded-2xl shadow-2xl flex w-2/2 max-w-4xl">
+        <div class="w-2/5 bg-teal-700 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
+            <h2 class="text-3xl font-bold mb-0">امارة</h2>
+            <h2 class="text-3xl font-bold mb-0">منطقة الباحة</h2>
+
+            <div class="border-2 w-10 border-white inline-block mb-2"></div>
+            <p class="mb-10">برنامج ادارة السيارات والخدمات </p>
+         </div> 
+         
+        <div class="w-3/5 p-5">
+             <!-- <div class="text-left font-bold"><span class="text-teal-700">Brand</span>Name</div> -->
+             <div class="py-10">
+               <div class="flex justify-center items-center">
+                  <img class="h-20 align-top" src="../assets/logo2.png" alt="">
+               </div>
+                <h2 class="text-2xl font-bold text-teal-700 mb-2">تسجيل الدخول</h2>
+                <div class="border-2 w-10 border-teal-700 inline-block mb-2"></div>
+                <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }" class="flex flex-col items-center">
+                    <div class="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                        <Field name="username" autocomplete="username" type="text" class="bg-gray-100 outline-none text-sm flex-1" :class="{ 'is-invalid': errors.username }" placeholder="اسم المستخدم"/>
+                        <ErrorMessage name="username" />
+                        <!-- <input type="text" name="email" placeholder="Email" class="bg-gray-100 outline-none text-sm flex-1"> -->
+                     </div>
+                     <div class="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                        <Field type="password" autocomplete="current-password" name="password" placeholder="كلمة المرور" class="bg-gray-100 outline-none text-sm flex-1" />
+                        <ErrorMessage name="password" />
+                    </div>
+                    <button type="submit" :disabled="isSubmitting" class="border-2 border-teal-700 rounded-full px-12 py-2 inline-block font-semibold hover:bg-teal-700 hover:text-white">
+                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
+                            {{ $t("login.login") }}
+                    </button>
+                    <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{errors.apiError}}</div>
+                </Form>
+             </div>
+          </div>
+         
+       </div>
+    </div>
+ </div>

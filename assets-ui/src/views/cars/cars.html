@@ -10,11 +10,11 @@
 <div class="grid grid-cols-3 gap-4 m-4">
 <div>
   <p class="text-2xl p-3">{{ authUser.name }}</p>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-2 gap-4">
     <div><strong>{{$t("cars.cars")}}</strong></div>
     <div>
       <CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
-      <Button @click="isOpen=true">{{$t("cars.request")}}</Button>
+      <a class="" @click="isOpen=true">{{$t("cars.request")}}</a>
     </div>
 
 
@@ -73,7 +73,7 @@
     </li>
 </ul>
 <!-- Subordinate requests: -->
-<h2>Subordinate requests:</h2>
+<strong>Subordinate requests:</strong>
  <ul>
   <li v-for="emp in subordinateCarRequests" :key="emp.id">
     {{emp.name}}
