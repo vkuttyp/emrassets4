@@ -14,13 +14,22 @@ const { user: authUser } = storeToRefs(authStore)
 
 carsStore.getCarVotingPendingList();
 
-const managerResponseId = ref(null)
+const managerResponseId = ref('')
 const voting = ref(null);
 const isOpen = ref(false);
 
-function votingClicked(managerResponse) {
- voting.value = managerResponse.voting;
-  managerResponseId.value=managerResponse.id;
+function votingClicked(pending) {
+  
+  if(pending.carVotingDetail===undefined || pending.carVotingDetail===null){
+    pending.carVotingDetail= {
+      managerResponseId: pending.id,
+      responseTypeId: 0,
+      voteCount: 0,
+      notes: ''
+    }
+  }
+ voting.value = pending.carVotingDetail;
+  managerResponseId.value=pending.id;
   isOpen.value = !isOpen.value;
 }
 const toggleModal = () => {
@@ -28,11 +37,12 @@ const toggleModal = () => {
 };
 const requestSaved = (data) => {
   isOpen.value=false;
+  voting.value=data;
 //   if(Array.isArray(subordinateCarRequests.value) && data) {
 //   subordinateCarRequests.value.forEach(emp => {
 //   emp.carRequests.find((request)=> request.id===data.requestId).carManagerResponse = data;
 //  });
-console.log(data);
+// console.log(data);
   
 };
 const requestModalClosed = ()=> {

@@ -26,7 +26,7 @@ const props = defineProps({
     managerResponseId: {
       type: String,
       default: '',
-      required: false
+      required: true
     },
     carVotingDetail: {
       type: Object
@@ -38,7 +38,6 @@ const props = defineProps({
 };
 
 const schema = Yup.object().shape({
-  requestId: Yup.string(),
     responseTypeId: Yup.number().moreThan(0),
     notes: Yup.string().required('notes is required'),
 });

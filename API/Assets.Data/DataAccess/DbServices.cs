@@ -303,6 +303,26 @@ public class MyDb : IMyDb
         }
         return new();
     }
+
+    public async Task<CarVotingDetail?> CarVotingDetailUpdate(CarVotingDetail voting)
+    {
+        using (var cmd = MyCommand.CmdProc("CarVotingDetails_Update", connectionString))
+        {
+            var parjson = MyCommand.ToJson(voting);
+            cmd.Parameters.AddWithValue("@json", parjson);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<CarVotingDetail>(json);
+                }
+            }
+        }
+        return null;
+    }
 }
 public interface IMyDb
 {
@@ -323,4 +343,6 @@ public interface IMyDb
     Task<CarManagerResponse?> CarManagerResponseUpdate(CarManagerResponse response);
     Task<List<MyListItem>> GetListItems(int typeId, int userId);
     Task<List<CarManagerResponse>> CarVotingPendingList(int userId);
+    Task<CarVotingDetail?> CarVotingDetailUpdate(CarVotingDetail voting);
+
 }

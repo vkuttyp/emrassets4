@@ -109,10 +109,10 @@ namespace Assets.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CarVoting([FromBody] CarVotingDetail? vote)
         {
-            //if (response == null) throw new ArgumentNullException(nameof(response));
-            //int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
-            //response.ManagerId = userId;
-            //response = await _db.CarManagerResponseUpdate(response);
+            if (vote == null) throw new ArgumentNullException(nameof(vote));
+            int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
+            vote.MemberId = userId;
+            vote = await _db.CarVotingDetailUpdate(vote);
             return Ok(vote);
         }
     }
