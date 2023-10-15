@@ -10,11 +10,11 @@
 <div class="grid grid-cols-3 gap-4 m-4">
 <div>
   <p class="text-2xl p-3">{{ authUser.name }}</p>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="flex justify-between">
     <div><strong>{{$t("cars.cars")}}</strong></div>
     <div>
       <CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
-      <a class="" @click="isOpen=true">{{$t("cars.request")}}</a>
+      <a class="text-sm" @click="isOpen=true">{{$t("cars.request")}}</a>
     </div>
 
 
@@ -73,44 +73,49 @@
     </li>
 </ul>
 <!-- Subordinate requests: -->
-<strong>Subordinate requests:</strong>
- <ul>
-  <li v-for="emp in subordinateCarRequests" :key="emp.id">
-    {{emp.name}}
-    <table class="table text-sm">
-      <thead>
-        <th>date</th>
-        <th>detail</th>
-        <th>Action</th>
-        <th>Response</th>
-      </thead>
-      <tbody>
-        <tr v-for="request in emp.carRequests" :key="request.id">
-          <td>{{ uq(request.requestDate).format('yyyy/MM/dd') }}</td>
-          <td>{{ request.requestDetail }}</td>
-          <td>
-            <!-- (event) => warn('Form cannot be submitted yet.', event) -->
-            <button @click.prevent="approveClicked(request)">Approve</button>
-          </td>
-          <td>{{request.carManagerResponse.managerResponseType?.name}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
- </ul>
+<div class="my-8">
+  <strong>{{$t("carRequest.subordinateRequests")}}:</strong>
+  <ul>
+   <li v-for="emp in subordinateCarRequests" :key="emp.id">
+     {{emp.name}}
+     <table class="table text-sm">
+       <thead>
+         <th>{{$t("carRequest.date")}}</th>
+         <th>{{$t("carRequest.details")}}</th>
+         <th>{{$t("carRequest.approvalStatus")}}</th>
+       </thead>
+       <tbody>
+         <tr v-for="request in emp.carRequests" :key="request.id">
+           <td>{{ uq(request.requestDate).format('yyyy/MM/dd') }}</td>
+           <td>{{ request.requestDetail }}</td>
+           <td>
+             <!-- (event) => warn('Form cannot be submitted yet.', event) -->
+             <button :class="requestStatusStyle(request)" @click.prevent="approveClicked(request)">
+                {{getRequestCaption(request)}}
+             </button>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </li>
+  </ul>
+</div>
+
 </div>
 <div>
-  <h3>Requests</h3>
+  <h3>{{$t("carRequest.carRequestsList")}}</h3>
   
- <table class="table">
+ <table class="table text-sm">
   <thead>
-    <th>Date</th>
-    <th>Details</th>
+    <th>{{$t("carRequest.date")}}</th>
+    <th>{{$t("carRequest.details")}}</th>
+    <th>{{$t("carRequest.approvalStatus")}}</th>
   </thead>
   <tbody>
     <tr v-for="r in carRequests" :key="r.id">
       <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
       <td>{{r.requestDetail}}</td>
+      <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
     </tr>
   </tbody>
  </table>

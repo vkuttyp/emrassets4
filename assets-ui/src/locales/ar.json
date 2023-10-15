@@ -12,8 +12,8 @@
         "siteName":"إمارة منطقة الباحة",
         "dashboardTitle":"الصفحة الرئيسية",
         "loginTitle":"شاشة الدخول",
-        "carsTitle":"شاشة السيارات"
-
+        "carsTitle":"شاشة السيارات",
+        "carsVotingTitle":"تصويت السيارات"
     },
 
     "cars": {
@@ -26,10 +26,16 @@
         "employeeName":"الاسم",
         "subordinateName":"الاسم",
         "subordinates":"الموظفين"
+        
     },
     "carRequest": {
+        "carRequestsList":"قائمة طلبات السيارات",
+        "subordinateRequests":"طلبات الموظفين للسيارات",
         "details":"تفاصيل الطلب",
         "notes":"الغرض من الطلب",
-        "save":"حفظ"
+        "save":"حفظ",
+        "date":"التاريخ",
+        "approvalStatus":"حالة الطلب",
+        "pending":"لم يتم الرد"
     }
 }

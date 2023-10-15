@@ -41,15 +41,16 @@ public class Car
 
 public class CarRequest
 {
-    public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
+    public string? id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
     public int SerialNo { get; set; }
-    public DateTime RequestDate { get; set; } = DateTime.Now;
+    public DateTime? RequestDate { get; set; } = DateTime.Now;
     public int UserId { get; set; }
     public int RegionId { get; set; }
-    public string RequestDetail { get; set; } = "";
-    public string Notes { get; set; } = "";
+    public string? RequestDetail { get; set; } = "";
+    public string? Notes { get; set; } = "";
     public int DepartmentId { get; set; }
-    public CarManagerResponse CarManagerResponse { get; set; }=new CarManagerResponse();
+    public CarManagerResponse? CarManagerResponse { get; set; }=new CarManagerResponse();
+    public ArpUser? Beneficiary { get; set; }
 }
 public class CarManagerResponse
 {
@@ -61,17 +62,21 @@ public class CarManagerResponse
     public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";
     public MyListItem? ManagerResponseType { get; set; } = new MyListItem();
+    public CarRequest? CarRequest { get; set; }
+    public ArpUser? Manager { get; set; }
+    public CarVotingDetail? CarVotingDetail {get;set;}
 }
-public class BoardResponse
+public class CarVotingDetail
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
     public int SerialNo { get; set; }
-    public DateTime ResponseDate { get; set; } = DateTime.Now;
-    public string RequestId { get; set; } = "";
-    public int BoardUserId { get; set; }
+    public DateTime VotingDate { get; set; } = DateTime.Now;
+    public string ManagerResponseId { get; set; } = "";
+    public int MemberId { get; set; }
     public int ResponseTypeId { get; set; }
-    public decimal VoteCount { get; set; }
+    public int VoteCount { get; set; }
     public string Notes { get; set; } = "";
+    public MyListItem? ResponseType { get; set; }=new();
 }
 public class FinalApproval
 {

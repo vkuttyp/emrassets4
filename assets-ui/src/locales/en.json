@@ -12,7 +12,8 @@
         "siteName":"Al-Baha Emarah",
         "dashboardTitle":"Dashboard",
         "loginTitle":"Login Page",
-        "carsTitle":"Cars Page"
+        "carsTitle":"Cars Page",
+        "carsVotingTitle":"Cars Voting"
     },
     "cars": {
         "cars":"Cars",
@@ -26,8 +27,13 @@
         "subordinates":"Subordinates"
     },
     "carRequest": {
+        "carRequestsList":"Car Requests List",
+        "subordinateRequests":"Subordinate Car Requests",
         "details":"Request Details",
         "notes":"Request notes",
-        "save":"Save"
+        "save":"Save",
+        "date":"Date",
+        "approvalStatus":"Reques Status",
+        "pending":"Pending"
     }
 }

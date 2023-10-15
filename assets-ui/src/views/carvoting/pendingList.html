@@ -1,0 +1,24 @@
+<div>
+    <VoteModal :carVotingDetail="voting" :managerResponseId="managerResponseId" :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></VoteModal>
+
+    <table class="table">
+        <thead>
+            <th>Date</th>
+            <th>name</th>
+            <th>request detail</th>
+        </thead>
+        <tbody>
+            <tr v-for="pending in carVotingPendingList" :key="pending.id">
+                <td>{{uq(pending?.carRequest?.requestDate).format('yyyy/MM/dd')}}</td>
+                <td>{{pending?.carRequest?.beneficiary?.name}}</td>
+                <td>{{pending?.carRequest?.requestDetail}}</td>
+                <td>
+                    <button :class="requestStatusStyle(pending)" @click.prevent="votingClicked(pending)">
+                       {{getRequestCaption(pending)}}
+                    </button>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>

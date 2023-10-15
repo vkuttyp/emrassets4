@@ -7,10 +7,12 @@ const baseUrl = `${import.meta.env.VITE_API_URL}/api/cars`;
 export const useCarsStore = defineStore({
     id: 'cars',
     state: () => ({
+        saving: {},
         userCars: {},
         subordinates: {},
         carRequest: {},
-        responseTypes: {}
+        responseTypes: {},
+        carVotingPendingList: {}
     }),
     getters: {
         subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
@@ -63,6 +65,25 @@ export const useCarsStore = defineStore({
             this.carRequest = { loading: true}
             return await fetchWrapper.post(`${baseUrl}/ResponseCar`, managerResponse)
             .catch(error => this.carRequest = { error})
+        },
+
+        //Pending Voting List:
+        async getCarVotingPendingList() {
+            this.userCars = { loading: true };
+            let url = `${baseUrl}/CarVotingPendingList`;
+            fetchWrapper.get(url)
+                .then(data => { 
+                    this.carVotingPendingList = data;
+                    //  console.log(this.users)
+                })
+                .catch(error => this.carVotingPendingList = { error })
+        },
+
+         //Board voting:
+         async carMemberVote(vote) {
+            this.saving = { loading: true}
+            return await fetchWrapper.post(`${baseUrl}/CarVoting`, vote)
+            .catch(error => this.saving = { error})
         },
     }
 });

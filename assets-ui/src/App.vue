@@ -44,7 +44,7 @@ function toggleMenu(){
             :class="menuOpen ? 'block': 'hidden'"
           >
             <li class="mr-12 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/cars`" class="text-copy-primary hover:text-gray-600">{{ $t("cars.cars") }}</router-link>
+              <router-link :to="`/${$i18n.locale}/carsvoting`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsVotingTitle") }}</router-link>
             </li>
             <li class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("login.logout") }}</router-link>

@@ -95,5 +95,25 @@ namespace Assets.Api.Controllers
 
             return Ok(items);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CarVotingPendingList()
+        {
+            int.TryParse(User.FindFirst("UserId")?.Value, out var userId);
+            var items = await _db.CarVotingPendingList(userId);
+
+            return Ok(items);
+        }
+
+        // Car board voting
+        [HttpPost]
+        public async Task<IActionResult> CarVoting([FromBody] CarVotingDetail? vote)
+        {
+            //if (response == null) throw new ArgumentNullException(nameof(response));
+            //int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
+            //response.ManagerId = userId;
+            //response = await _db.CarManagerResponseUpdate(response);
+            return Ok(vote);
+        }
     }
 }

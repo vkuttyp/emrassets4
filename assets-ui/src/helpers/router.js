@@ -1,7 +1,7 @@
 import {RouterView,  createRouter, createWebHistory } from 'vue-router';
 
 import { useAuthStore } from '@/stores';
-import { HomeView, Login, Logout, Cars, Dashboard } from '@/views';
+import { HomeView, Login, Logout, Cars, Dashboard, CarVoting } from '@/views';
 import i18n  from '../locales/i18.js';
 const locale = i18n.locale ?? 'ar';
 
@@ -35,6 +35,12 @@ export const router = createRouter({
             name: 'cars',
             component: Cars,
             meta: { title: i18n.global.t('common.carsTitle') }
+        },
+        { 
+            path: 'carsvoting',
+            name: 'carsvoting',
+            component: CarVoting,
+            meta: { title: i18n.global.t('common.carsVotingTitle') }
         },
         { 
             path: 'login',
