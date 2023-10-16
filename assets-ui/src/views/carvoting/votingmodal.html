@@ -6,47 +6,58 @@
 <!-- Dialog Header -->
 <template #header>
     <button @click="toggleModal">X</button>
-  <h2 class="font-bold text-lg text-center">Vote detail</h2>
+  <h2 class="font-bold text-lg text-center">{{$t("voting.title")}}</h2>
 
 </template>
 
 <!-- Dialog Content -->
 <template #content>
     <div>
+    <pre>{{authUser?.carBoardMember.boardMemberType.voteCount}}</pre>
+        <table class="table">
+            <thead>
+                <th>{{$t("voting.memberType")}}</th>
+                <th>{{$t("voting.voteCount")}}</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{authUser?.carBoardMember?.boardMemberType?.name}}</td>
+                    <td>{{authUser?.carBoardMember?.boardMemberType?.voteCount}}</td>
+                </tr>
+            </tbody>
+        </table>
+      
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
             <div class="form-group">
-                <label>My response type</label>
-               
-                  <!-- <Field name="responseTypeId" as="select" class="form-control" >
-                    <option value="">
-                        Select an Item
-                    </option>
-                    <option v-for="t in carsStore.responseTypes" :key="t.id" :value="t.id" :selected="selectedItem && selectedItem.id==t.id">
-                        {{t.name}}
-                    </option>
-                </Field> -->
-                
-                    <table class="table">
-                        <tr>
-                        <td v-for="t in carsStore.responseTypes" :key="t.id"> 
-                            
-                            <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail?.responseTypeId" :value="t.id" />
-                            {{ t.name }}
-                        </td>
-                    </tr>
-                    </table>
+                <label class="bg-teal-600 w-full text-center font-bold text-lg text-white">{{$t("voting.selectionTitle")}}</label>
+                <!-- <div class="h-56 grid grid-cols-2 gap-0 content-center">
+                    <div v-for="t in carsStore.responseTypes" :key="t.id">
+                        <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail.responseTypeId" v-model="carVotingDetail.responseTypeId" :value="t.id" />
+                        {{ t.name }}
+                    </div>
+                   
+                  </div> -->
+                <table class="table">
+                    <tr class="">
+                    <td class="content-center" v-for="t in carsStore.responseTypes" :key="t.id"> 
+                        
+                        <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail.responseTypeId" v-model="carVotingDetail.responseTypeId" :value="t.id" />
+                        {{ t.name }}
+                    </td>
+                </tr>
+                </table>
                     <ErrorMessage name="responseTypeId" />
                
             </div>            
             <div class="form-group">
-                <label>{{ $t("carRequest.notes") }}</label>
+                <label>{{ $t("voting.notes") }}</label>
                 <Field name="notes" :value="props?.carVotingDetail?.notes ?? ''" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
                 <div class="invalid-feedback">{{errors.notes}}</div>
             </div>            
             <div class="form-group">
                 <button class="btn btn-primary" :disabled="isSubmitting">
                     <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                    {{ $t("carRequest.save") }}
+                    {{ $t("voting.save") }}
                 </button>
             </div>
             <div v-if="errors?.apiError" class="alert alert-danger mt-3 mb-0">{{errors?.apiError?.Title}}</div>

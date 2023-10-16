@@ -110,12 +110,16 @@
     <th>{{$t("carRequest.date")}}</th>
     <th>{{$t("carRequest.details")}}</th>
     <th>{{$t("carRequest.approvalStatus")}}</th>
+    <th>{{$t("voting.voteCount")}}</th>
+    <th>{{$t("voting.obtainedVotes")}}</th>
   </thead>
   <tbody>
     <tr v-for="r in carRequests" :key="r.id">
       <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
       <td>{{r.requestDetail}}</td>
       <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
+      <td>{{r.carManagerResponse.totalVotesCount}}</td>
+      <td>{{r.carManagerResponse.totalVotesObtained}}</td>
     </tr>
   </tbody>
  </table>

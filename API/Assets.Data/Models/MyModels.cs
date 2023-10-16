@@ -1,15 +1,19 @@
 ﻿namespace Assets.Data.Models;
 
 
-public class BoardUser
+public class BoardMember
 {
     public int id { get; set; }
-    public int UserId { get; set; }
-    public int UserTypeId { get; set; }
-    public int BoardId { get; set; }
+    public int ArpId { get; set; }
+    public int MemberTypeId { get; set; }
+    public BoardMemberType BoardMemberType { get; set; }
+}
+public class BoardMemberType
+{
+    public int id { get; set; }
+    public string name { get; set; }
     public int VoteCount { get; set; }
 }
-
 public class CarCategory
 {
     public int id { get; set; }
@@ -65,6 +69,9 @@ public class CarManagerResponse
     public CarRequest? CarRequest { get; set; }
     public ArpUser? Manager { get; set; }
     public List<CarVotingDetail>? Votings { get; set; } = new();
+    public CarVotingDetail? CurrentUserVoting { get; set; }
+    public int TotalVotesCount { get; set; }
+    public int TotalVotesObtained=> Votings?.Sum(a=>a.VoteCount) ?? 0;
 }
 public class CarVotingDetail
 {

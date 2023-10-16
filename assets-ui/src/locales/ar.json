@@ -31,11 +31,23 @@
     "carRequest": {
         "carRequestsList":"قائمة طلبات السيارات",
         "subordinateRequests":"طلبات الموظفين للسيارات",
+        "employeeName":"اسم الموظف",
         "details":"تفاصيل الطلب",
         "notes":"الغرض من الطلب",
         "save":"حفظ",
         "date":"التاريخ",
-        "approvalStatus":"حالة الطلب",
+        "approvalStatus":"موافقة الرئيس المباشر",
         "pending":"لم يتم الرد"
+    },
+    "voting": {
+        "title":"التصويت على السيارات",
+        "selectionTitle":"التصويت",
+        "notes":"ملاحظات",
+        "save":"إرسال",
+        "memberType":"نوع العضو",
+        "voteCount":"عدد الأصوات",
+        "totalVotes":"إجمالي عدد الأصوات",
+        "obtainedVotes":"عدد الأصوات المكتسبة",
+        "vote":"التصويت"
     }
 }

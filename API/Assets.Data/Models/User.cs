@@ -30,6 +30,7 @@ public class ArpUser
     public List<ArpUser>? Subordinates { get; set; }
     public List<CarDeliveryDetail> CarDeliveries { get; set; }
     public List<CarRequest> CarRequests { get; set; }
+    public BoardMember? CarBoardMember { get; set; }
     public string Token { get; set; }
 }
 public class ArpDepartment

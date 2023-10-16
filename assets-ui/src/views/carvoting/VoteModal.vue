@@ -48,6 +48,7 @@ async function onSubmit(values) {
     vote.managerResponseId=props.managerResponseId;
     vote.responseTypeId=responseTypeId;
     vote.notes=notes;
+    vote.voteCount=authUser.value.carBoardMember.boardMemberType.voteCount;
     return await carsStore.carMemberVote(vote)
         .then(data => {
             if(data.error) {

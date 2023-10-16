@@ -19,16 +19,15 @@ const voting = ref(null);
 const isOpen = ref(false);
 
 function votingClicked(pending) {
-  
-  if(pending.carVotingDetail===undefined || pending.carVotingDetail===null){
-    pending.carVotingDetail= {
+  if(pending.currentUserVoting===undefined || pending.currentUserVoting===null){
+    pending.currentUserVoting= {
       managerResponseId: pending.id,
       responseTypeId: 0,
       voteCount: 0,
       notes: ''
     }
   }
- voting.value = pending.carVotingDetail;
+ voting.value = pending.currentUserVoting;
   managerResponseId.value=pending.id;
   isOpen.value = !isOpen.value;
 }

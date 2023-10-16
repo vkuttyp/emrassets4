@@ -29,11 +29,23 @@
     "carRequest": {
         "carRequestsList":"Car Requests List",
         "subordinateRequests":"Subordinate Car Requests",
+        "employeeName":"ُEmployee Name",
         "details":"Request Details",
         "notes":"Request notes",
         "save":"Save",
         "date":"Date",
         "approvalStatus":"Reques Status",
         "pending":"Pending"
+    },
+    "voting": {
+        "title":"Car Voting",
+        "selectionTitle":"VOTE",
+        "notes":"Notes",
+        "save":"Send",
+        "memberType":"Member Type",
+        "voteCount":"Number of Votes",
+        "totalVotes":"Total Votes",
+        "obtainedVotes":"Votes Aquired",
+        "vote":"Vote"
     }
 }
