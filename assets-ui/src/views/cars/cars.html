@@ -13,8 +13,8 @@
   <div class="flex justify-between">
     <div><strong>{{$t("cars.cars")}}</strong></div>
     <div>
-      <CarRequest :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
-      <a class="text-sm" @click="isOpen=true">{{$t("cars.request")}}</a>
+      <CarRequest :request="request" :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
+      <a class="text-sm" @click="openNewRequest">{{$t("cars.request")}}</a>
     </div>
 
 
@@ -83,17 +83,20 @@
          <th>{{$t("carRequest.date")}}</th>
          <th>{{$t("carRequest.details")}}</th>
          <th>{{$t("carRequest.approvalStatus")}}</th>
+         <th>{{$t("voting.voteCount")}}</th>
+    <th>{{$t("voting.obtainedVotes")}}</th>
        </thead>
        <tbody>
          <tr v-for="request in emp.carRequests" :key="request.id">
            <td>{{ uq(request.requestDate).format('yyyy/MM/dd') }}</td>
            <td>{{ request.requestDetail }}</td>
            <td>
-             <!-- (event) => warn('Form cannot be submitted yet.', event) -->
-             <button :class="requestStatusStyle(request)" @click.prevent="approveClicked(request)">
-                {{getRequestCaption(request)}}
-             </button>
-           </td>
+            <button :class="requestStatusStyle(request)" @click.prevent="approveClicked(request)">
+               {{getRequestCaption(request)}}
+            </button>
+          </td>
+           <td>{{request.carManagerResponse?.totalVotesCount}}</td>
+           <td>{{request.carManagerResponse?.totalVotesObtained}}</td>
          </tr>
        </tbody>
      </table>
@@ -112,6 +115,7 @@
     <th>{{$t("carRequest.approvalStatus")}}</th>
     <th>{{$t("voting.voteCount")}}</th>
     <th>{{$t("voting.obtainedVotes")}}</th>
+    <th></th>
   </thead>
   <tbody>
     <tr v-for="r in carRequests" :key="r.id">
@@ -120,6 +124,8 @@
       <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
       <td>{{r.carManagerResponse.totalVotesCount}}</td>
       <td>{{r.carManagerResponse.totalVotesObtained}}</td>
+      <td><button @click="requestClicked(r)">Open</button></td>
+
     </tr>
   </tbody>
  </table>

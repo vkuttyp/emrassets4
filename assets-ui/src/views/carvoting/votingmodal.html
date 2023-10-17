@@ -1,6 +1,6 @@
 <Dialog 
-:open="isOpen" 
-@close="toggleModal"
+:isOpen="isOpen" 
+@closeModal="toggleModal"
 >
 
 <!-- Dialog Header -->
@@ -13,7 +13,6 @@
 <!-- Dialog Content -->
 <template #content>
     <div>
-    <pre>{{authUser?.carBoardMember.boardMemberType.voteCount}}</pre>
         <table class="table">
             <thead>
                 <th>{{$t("voting.memberType")}}</th>

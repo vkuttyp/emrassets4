@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <TransitionRoot appear :show="props.open" as="template">
+    <TransitionRoot appear :show="props.isOpen" as="template">
       <Dialog as="template" @close="handleClose()">
         <div class="fixed inset-0 overflow-hidden" style="z-index: 1000">
           <div class="dialog-wrapper px-12">
@@ -67,7 +67,7 @@
   
   // Props
   const props = defineProps({
-    open: {
+    isOpen: {
       type: Boolean,
       default: false,
     },
@@ -83,14 +83,14 @@
   
   // Emit
   const emit = defineEmits<{
-    (event: 'close'): void;
-    (event: 'update:open', isOpen: boolean): void;
+    (event: 'closeModal'): void;
+    (event: 'update:isOpen', isOpen: boolean): void;
   }>();
   
   // Handle close
   const handleClose = () => {
     if (!props.closeable) return;
-    emit('close');
+    emit('closeModal');
   };
   
   // HTML Refs
@@ -103,9 +103,9 @@
   
   // Watch open prop
   watch(
-    () => props.open,
-    async (open) => {
-      if (!open) return;
+    () => props.isOpen,
+    async (isOpen) => {
+      if (!isOpen) return;
   
       // Let browser repaint
       await nextTick();

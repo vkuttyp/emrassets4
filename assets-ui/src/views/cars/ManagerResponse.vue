@@ -3,12 +3,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineAsyncComponent, computed } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
-import Dialog from '@/components/Dialog.vue';
+// import Dialog from '@/components/Dialog.vue';
 import Button from '@/components/Button.vue';
 import { useCarsStore } from '@/stores'
 import * as Yup from 'yup';
+
+const Dialog = defineAsyncComponent(() => import('@/components/Dialog.vue'))
 
 const carsStore=useCarsStore();
 const emit = defineEmits(["saved","error","closed"]);
@@ -19,19 +21,20 @@ const props = defineProps({
     },
     requestId: {
       type: String,
-      default: '33222',
+      default: '',
       required: false
     },
     carManagerResponse: {
       type: Object
     }
   });
-  const selectedItem = ref(null);
   const toggleModal = () => {
     apiError.value=null;
   emit("closed")
 };
-
+const beenVoted = computed(() => {
+  return props.carManagerResponse?.totalVotesObtained > 0;
+})
 const schema = Yup.object().shape({
   requestId: Yup.string(),
     responseTypeId: Yup.number().moreThan(0),
@@ -61,4 +64,5 @@ async function onSubmit(values) {
             apiError.value=error;
         });
 }
+
 </script>

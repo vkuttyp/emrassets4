@@ -3,10 +3,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia'
 import { Form, Field, ErrorMessage } from 'vee-validate';
-import Dialog from '@/components/Dialog.vue';
+// import Dialog from '@/components/Dialog.vue';
 import Button from '@/components/Button.vue';
 import { useCarsStore, useAuthStore } from '@/stores'
 import * as Yup from 'yup';
@@ -16,7 +16,7 @@ carsStore.getResponseTypes(1);
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
-
+const Dialog = defineAsyncComponent(() => import('@/components/Dialog.vue'))
 const emit = defineEmits(["saved","error","closed"]);
 const props = defineProps({
     isOpen: {

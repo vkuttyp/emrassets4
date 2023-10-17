@@ -35,7 +35,9 @@
         "save":"Save",
         "date":"Date",
         "approvalStatus":"Reques Status",
-        "pending":"Pending"
+        "pending":"Pending",
+        "disableManagerResponse":"Changes disabled because Voting has started...",
+        "disableRequest":"Changes disabled because The Manager has approved the request"
     },
     "voting": {
         "title":"Car Voting",

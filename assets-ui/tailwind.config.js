@@ -13,6 +13,13 @@ export default {
       
     },
   },
+  variants: {
+    extend: {
+        cursor: ['disabled'],
+        pointerEvents: ['disabled'],
+        backgroundColor: ['disabled'],
+    },
+},
   plugins: [
     plugin(function({ addBase }) {
       addBase({

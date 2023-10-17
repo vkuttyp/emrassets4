@@ -20,6 +20,10 @@ authUser.value.carDeliveries = userCars
 carsStore.currentUserDeliveries()
 carsStore.getSubordinates()
 carsStore.getResponseTypes(1);
+function openNewRequest(){
+  request.value=null;
+  isOpen.value=true;
+}
 // watch(authStore.user, (currentValue, oldValue) => {
 //       console.log(currentValue);
 //       console.log(oldValue);
@@ -29,8 +33,15 @@ const toggleModal = () => {
   isOpen.value = !isOpen.value;
 };
 const requestSaved = (data) => {
-  isOpen.value=false
- carRequests.value.push(data);
+  isOpen.value=false;
+  const index = carRequests.value.findIndex((e) => e.id === data.id);
+
+    if (index === -1) {
+      carRequests.value.unshift(data);
+    } else {
+        carRequests.value[index] = data;
+    }
+
 };
 const requestModalClosed = ()=> {
   isOpen.value=false;
@@ -38,6 +49,13 @@ const requestModalClosed = ()=> {
 const requestError = (data) => {
   console.log(data);
 };
+
+const request = ref(null)
+function requestClicked(r){
+  request.value=r;
+  isOpen.value=true;
+}
+
 const requestId = ref(null)
 const carManagerResponse = ref(null);
 const isOpen2 = ref(false);

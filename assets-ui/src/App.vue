@@ -18,7 +18,7 @@ function toggleMenu(){
         <nav class="container mx-auto px-8 flex flex-wrap justify-between items-center py-8">
           <div class="mb-0 lg:mb-6 xl:mb-0">
             <router-link :to="`/${$i18n.locale}`" class="font-bold text-xl flex items-end">
-              <img src="@/assets/logo2.png" alt="logo" class="w-10">
+              <img src="@/assets/img/logo.png" alt="logo" class="w-10">
               <span>إمارة منطقة الباحة</span>
             </router-link>
           </div>

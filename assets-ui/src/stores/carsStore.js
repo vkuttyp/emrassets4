@@ -54,9 +54,9 @@ export const useCarsStore = defineStore({
                 })
                 .catch(error => this.subordinates = { error })
         },
-        async requestCar(requestDetail, notes) {
+        async requestCar(request) {
             this.carRequest = { loading: true}
-            return await fetchWrapper.post(`${baseUrl}/RequestCar`, { requestDetail, notes })
+            return await fetchWrapper.post(`${baseUrl}/RequestCar`, request)
             .catch(error => this.carRequest = { error})
         },
 
