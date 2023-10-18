@@ -1,16 +1,12 @@
-<!-- eslint-disable vue/multi-word-component-names -->
-<!-- eslint-disable no-unused-vars -->
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, watchEffect } from 'vue';
 import i18n from '../../locales/i18';
-import Button from '@/components/Button.vue';
-import Modal from '@/components/Modal.vue';
 import { CarRequest, ManagerResponse } from '..';
 import { storeToRefs } from 'pinia'
 import uq from '@umalqura/core';
 import { useCarsStore, useAuthStore } from '@/stores'
 const carsStore = useCarsStore()
-const { userCars, subordinates, subordinateCarRequests, responseTypes } = storeToRefs(carsStore)
+const { userCars, subordinates, subordinateCarRequests, responseTypes, carRequests } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
@@ -24,25 +20,21 @@ function openNewRequest(){
   request.value=null;
   isOpen.value=true;
 }
-// watch(authStore.user, (currentValue, oldValue) => {
-//       console.log(currentValue);
-//       console.log(oldValue);
-//     });
 const isOpen = ref(false);
 const toggleModal = () => {
   isOpen.value = !isOpen.value;
 };
+
 const requestSaved = (data) => {
   isOpen.value=false;
   const index = carRequests.value.findIndex((e) => e.id === data.id);
-
     if (index === -1) {
       carRequests.value.unshift(data);
     } else {
         carRequests.value[index] = data;
     }
-
 };
+
 const requestModalClosed = ()=> {
   isOpen.value=false;
 }
@@ -82,38 +74,21 @@ const requestError2 = (data) => {
   console.log(data);
 };
 function getRequestCaption(request){
-  if(request.carManagerResponse.managerResponseType?.id===0){
+  if(request.carManagerResponse?.managerResponseType?.id===0){
     return i18n.global.t('carRequest.pending');
-  } else return request.carManagerResponse.managerResponseType?.name;
+  } else return request.carManagerResponse?.managerResponseType?.name;
 }
 function requestStatusStyle(request){
-  switch(request.carManagerResponse.managerResponseType?.id){
+  switch(request.carManagerResponse?.managerResponseType?.id){
     case 0: return 'text-gray-500';
     case 1: return 'text-green-500';
     case 2: return 'text-red-500';
     default: return 'text-bluee-500';
   }
 }
-const carRequests = ref([]);
-async function getCarRequests() {
-    return await carsStore.carRequestDetailsByBeneficiary(authStore.user.id)
-        .then(data => {
-            if(data.error) {
-            // apiError.value=data.error;
-            // setErrors({ apiError: data.error });
-            // console.log(data.error)
-            }
-            else{
-            carRequests.value=data;
-            }
-        })
-        .catch(error => {
-          // console.log(error);
-          // setErrors({ apiError: error });
-        });
-}
-
-await getCarRequests();
+watchEffect(() => {
+  carsStore.carRequestDetailsByBeneficiary(authStore.user.id);
+});
 </script>
 
 <template src="./cars.html">

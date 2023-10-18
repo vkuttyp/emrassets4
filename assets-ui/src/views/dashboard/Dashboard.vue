@@ -7,14 +7,8 @@
       <p class="text-sm text-gray-500">Invoide is on the way for  ...</p>
     </template>
   </Modal2> -->
-   <suspense>
-      <template #default>
-        <Cars />
-      </template>
-      <template #fallback>
-       <p>Loading</p>
-      </template>
-    </suspense>
+  <Cars />
+   
 </template>
 
 <script setup>

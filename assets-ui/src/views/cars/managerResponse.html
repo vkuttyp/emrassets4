@@ -30,7 +30,7 @@
                         <tr>
                         <td v-for="t in carsStore.responseTypes" :key="t.id"> 
                             
-                            <Field disabled="beenVoted" class="disabled:opacity-75" name="responseTypeId"  type="radio" :checked="t.id === carManagerResponse.responseTypeId" v-model="carManagerResponse.responseTypeId" :value="t.id" />
+                            <Field :disabled="beenVoted" class="disabled:opacity-75" name="responseTypeId"  type="radio" :checked="t.id === carManagerResponse.responseTypeId" v-model="carManagerResponse.responseTypeId" :value="t.id" />
                             {{ t.name }}
                         </td>
                     </tr>
@@ -40,7 +40,7 @@
             </div>            
             <div class="form-group">
                 <label>{{ $t("carRequest.notes") }}</label>
-                <Field disabled="beenVoted" name="notes" :value="props.carManagerResponse.notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
+                <Field :disabled="beenVoted" name="notes" :value="props.carManagerResponse.notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
                 <div class="invalid-feedback">{{errors.notes}}</div>
             </div>            
             <div class="form-group">

@@ -122,8 +122,8 @@
       <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
       <td>{{r.requestDetail}}</td>
       <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
-      <td>{{r.carManagerResponse.totalVotesCount}}</td>
-      <td>{{r.carManagerResponse.totalVotesObtained}}</td>
+      <td>{{r.carManagerResponse?.totalVotesCount}}</td>
+      <td>{{r.carManagerResponse?.totalVotesObtained}}</td>
       <td><button @click="requestClicked(r)">Open</button></td>
 
     </tr>

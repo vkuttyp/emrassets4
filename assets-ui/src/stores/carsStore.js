@@ -10,7 +10,7 @@ export const useCarsStore = defineStore({
         saving: {},
         userCars: {},
         subordinates: {},
-        carRequest: {},
+        carRequests: {},
         responseTypes: {},
         carVotingPendingList: {}
     }),
@@ -18,12 +18,17 @@ export const useCarsStore = defineStore({
         subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
       },
     actions: {
+
         async carRequestDetailsByBeneficiary(beneficiaryId) {
-            this.carRequest = { loading: true };
+            this.carRequests = { loading: true };
             let url = `${baseUrl}/CarRequestDetailsByBeneficiary/${beneficiaryId}`;
-            return await fetchWrapper.get(url)
-            .catch(error => this.carRequest = { error })
+            await fetchWrapper.get(url)
+            .then(items => {
+                this.carRequests=items;
+             })
+            .catch(error => this.carRequests = { error })
         },
+
         async getResponseTypes(typeId) {
             this.responseTypes = { loading: true };
             let url = `${baseUrl}/GetListItems/${typeId}`;
