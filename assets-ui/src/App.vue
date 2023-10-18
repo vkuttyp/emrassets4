@@ -15,11 +15,11 @@ function toggleMenu(){
 <template>
 <div id="app" class="font-Aljazeera text-gray-800" :dir="$i18n.locale=='ar'?'rtl':'ltr'">
       <header class="border-t-4 border-green-700 bg-white z-10 absolute w-full shadow-md">
-        <nav class="container mx-auto px-8 flex flex-wrap justify-between items-center py-8">
+        <nav class="px-8 flex py-8">
           <div class="mb-0 lg:mb-6 xl:mb-0">
             <router-link :to="`/${$i18n.locale}`" class="font-bold text-xl flex items-end">
               <img src="@/assets/img/logo.png" alt="logo" class="w-10">
-              <span>إمارة منطقة الباحة</span>
+              <span class="mx-4">إمارة منطقة الباحة</span>
             </router-link>
           </div>
           <div class="block lg:hidden">
@@ -33,6 +33,9 @@ function toggleMenu(){
           >
             <li v-if="authUser?.carBoardMember?.boardMemberType?.voteCount > 0" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/carsvoting`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsVotingTitle") }}</router-link>
+            </li>
+            <li v-if="authUser?.carBoardMember?.boardMemberType?.id===5" class="mr-12 mb-6 lg:mb-0">
+              <router-link :to="`/${$i18n.locale}/carsapproval`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsApprovalTitle") }}</router-link>
             </li>
             <li v-if="authUser" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("login.logout") }}</router-link>

@@ -13,7 +13,8 @@
         "dashboardTitle":"Dashboard",
         "loginTitle":"Login Page",
         "carsTitle":"Cars Page",
-        "carsVotingTitle":"Cars Voting"
+        "carsVotingTitle":"Cars Voting",
+        "carsApprovalTitle":"Cars Final Approval"
     },
     "cars": {
         "cars":"Cars",
@@ -31,13 +32,14 @@
         "subordinateRequests":"Subordinate Car Requests",
         "employeeName":"ُEmployee Name",
         "details":"Request Details",
-        "notes":"Request notes",
+        "notes":"Notes",
         "save":"Save",
         "date":"Date",
         "approvalStatus":"Reques Status",
         "pending":"Pending",
         "disableManagerResponse":"Changes disabled because Voting has started...",
-        "disableRequest":"Changes disabled because The Manager has approved the request"
+        "disableRequest":"Changes disabled because The Manager has approved the request",
+        "managerApprovalTitle":"Manager Approval for a request"
     },
     "voting": {
         "title":"Car Voting",
@@ -48,6 +50,8 @@
         "voteCount":"Number of Votes",
         "totalVotes":"Total Votes",
         "obtainedVotes":"Votes Aquired",
-        "vote":"Vote"
+        "vote":"Vote",
+        "pendingCaption":"Pending",
+        "completedCaption":"Completed"
     }
 }

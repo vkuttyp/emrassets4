@@ -16,6 +16,9 @@ export const useCarsStore = defineStore({
     }),
     getters: {
         subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
+        votingIncomple: (state) => Object.values(state.carVotingPendingList).filter((s) => s.totalVotesCount > s.totalVotesObtained),
+        votingCompleted: (state) => Object.values(state.carVotingPendingList).filter((s) => s.totalVotesCount === s.totalVotesObtained),
+
       },
     actions: {
 

@@ -12,9 +12,9 @@
 
 <!-- Dialog Content -->
 <template #content>
-    <div>
+    <div v-if="props.carVotingDetail">
         <table class="table">
-            <thead>
+            <thead text-sm>
                 <th>{{$t("voting.memberType")}}</th>
                 <th>{{$t("voting.voteCount")}}</th>
             </thead>
@@ -29,18 +29,11 @@
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
             <div class="form-group">
                 <label class="bg-teal-600 w-full text-center font-bold text-lg text-white">{{$t("voting.selectionTitle")}}</label>
-                <!-- <div class="h-56 grid grid-cols-2 gap-0 content-center">
-                    <div v-for="t in carsStore.responseTypes" :key="t.id">
-                        <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail.responseTypeId" v-model="carVotingDetail.responseTypeId" :value="t.id" />
-                        {{ t.name }}
-                    </div>
-                   
-                  </div> -->
-                <table class="table">
-                    <tr class="">
-                    <td class="content-center" v-for="t in carsStore.responseTypes" :key="t.id"> 
+                <table class="table mt-2">
+                    <tr class="flex justify-center items-center">
+                    <td class="content-center mx-4" v-for="t in carsStore.responseTypes" :key="t.id"> 
                         
-                        <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail.responseTypeId" v-model="carVotingDetail.responseTypeId" :value="t.id" />
+                        <Field name="responseTypeId"  type="radio" :checked="t.id === carVotingDetail?.responseTypeId" v-model="carVotingDetail.responseTypeId" :value="t.id" />
                         {{ t.name }}
                     </td>
                 </tr>

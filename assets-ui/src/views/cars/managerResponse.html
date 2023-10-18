@@ -6,28 +6,17 @@
 <!-- Dialog Header -->
 <template #header>
     <button @click="toggleModal">X</button>
-  <h2 class="font-bold text-lg text-center">{{$t("cars.request")}}</h2>
+  <h2 class="font-bold text-lg text-center">{{$t("carRequest.managerApprovalTitle")}}</h2>
 </template>
 
 <!-- Dialog Content -->
 <template #content>
     <div>
-        <div v-if="beenVoted"><strong class="text-red-500">{{$t("carRequest.disableManagerResponse")}}</strong></div>
+        <div v-if="beenVoted"><strong class="flex justify-center items-center text-red-500 mb-2">{{$t("carRequest.disableManagerResponse")}}</strong></div>
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
-            <div class="form-group">
-                <label>{{ $t("carRequest.details") }}</label>
-               
-                  <!-- <Field name="responseTypeId" as="select" class="form-control" >
-                    <option value="">
-                        Select an Item
-                    </option>
-                    <option v-for="t in carsStore.responseTypes" :key="t.id" :value="t.id" :selected="selectedItem && selectedItem.id==t.id">
-                        {{t.name}}
-                    </option>
-                </Field> -->
-                
+            <div class="form-group flex justify-center items-center">
                     <table class="table">
-                        <tr>
+                        <tr class="flex justify-center items-center">
                         <td v-for="t in carsStore.responseTypes" :key="t.id"> 
                             
                             <Field :disabled="beenVoted" class="disabled:opacity-75" name="responseTypeId"  type="radio" :checked="t.id === carManagerResponse.responseTypeId" v-model="carManagerResponse.responseTypeId" :value="t.id" />

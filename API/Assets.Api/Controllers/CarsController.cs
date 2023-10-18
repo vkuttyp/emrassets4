@@ -46,8 +46,7 @@ namespace Assets.Api.Controllers
         {
             int userId;
             int.TryParse(User.FindFirst("UserId")?.Value, out userId);
-            var subordinates = await _db.SubordinateDetails(userId);
-            if (subordinates is null) return NotFound();
+            var subordinates = await _db.SubordinateDetails(userId) ?? new();
 
             return Ok(subordinates);
         }

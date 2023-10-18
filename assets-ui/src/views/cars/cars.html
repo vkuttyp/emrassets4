@@ -7,7 +7,7 @@
 </Modal> -->
 <ManagerResponse :carManagerResponse="carManagerResponse" :requestId="requestId" :isOpen="isOpen2" @saved="requestSaved2" @error="requestError2" @closed="requestModalClosed2"></ManagerResponse>
 
-<div class="grid grid-cols-3 gap-4 m-4">
+<div class="grid grid-cols-2 gap-4 m-4">
 <div>
   <p class="text-2xl p-3">{{ authUser.name }}</p>
   <div class="flex justify-between">
@@ -39,8 +39,38 @@
     </tbody>
   </table>
 </div>
-<!-- Subordinates: -->
+
+<!-- Car Requests -->
 <div>
+  <h3>{{$t("carRequest.carRequestsList")}}</h3>
+  
+ <table class="table text-sm">
+  <thead>
+    <th>{{$t("carRequest.date")}}</th>
+    <th>{{$t("carRequest.details")}}</th>
+    <th>{{$t("carRequest.approvalStatus")}}</th>
+    <th>{{$t("voting.voteCount")}}</th>
+    <th>{{$t("voting.obtainedVotes")}}</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr v-for="r in carRequests" :key="r.id">
+      <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
+      <td>{{r.requestDetail}}</td>
+      <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
+      <td>{{r.carManagerResponse?.totalVotesCount}}</td>
+      <td>{{r.carManagerResponse?.totalVotesObtained}}</td>
+      <td><button @click="requestClicked(r)">Open</button></td>
+
+    </tr>
+  </tbody>
+ </table>
+</div>
+</div>
+<hr />
+<!-- Subordinates: -->
+<div class="grid grid-cols-2 gap-4 m-4">
+  <div>
   <strong>{{$t("cars.subordinates")}}</strong>
   <ul class="text-lg font-Aljazeera">
     <li v-for="emp in authUser.subordinates" :key="emp.id">
@@ -72,8 +102,9 @@
         </div>
     </li>
 </ul>
+</div>
 <!-- Subordinate requests: -->
-<div class="my-8">
+<div>
   <strong>{{$t("carRequest.subordinateRequests")}}:</strong>
   <ul>
    <li v-for="emp in subordinateCarRequests" :key="emp.id">
@@ -105,29 +136,5 @@
 </div>
 
 </div>
-<div>
-  <h3>{{$t("carRequest.carRequestsList")}}</h3>
-  
- <table class="table text-sm">
-  <thead>
-    <th>{{$t("carRequest.date")}}</th>
-    <th>{{$t("carRequest.details")}}</th>
-    <th>{{$t("carRequest.approvalStatus")}}</th>
-    <th>{{$t("voting.voteCount")}}</th>
-    <th>{{$t("voting.obtainedVotes")}}</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <tr v-for="r in carRequests" :key="r.id">
-      <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
-      <td>{{r.requestDetail}}</td>
-      <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
-      <td>{{r.carManagerResponse?.totalVotesCount}}</td>
-      <td>{{r.carManagerResponse?.totalVotesObtained}}</td>
-      <td><button @click="requestClicked(r)">Open</button></td>
 
-    </tr>
-  </tbody>
- </table>
-</div>
-</div>
+

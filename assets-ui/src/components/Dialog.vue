@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <TransitionRoot appear :show="props.isOpen" as="template">
+    <TransitionRoot appear :show="props.isOpen" as="template" :dir="$i18n.locale=='ar'?'rtl':'ltr'">
       <Dialog as="template" @close="handleClose()">
         <div class="fixed inset-0 overflow-hidden" style="z-index: 1000">
           <div class="dialog-wrapper px-12">
@@ -28,7 +28,7 @@
                 <div
                   v-if="$slots.header"
                   ref="dialogHeader"
-                  class="dialog-header border-b border-b-gray-300 p-4"
+                  class="dialog-header border-b border-b-gray-300 px-4 py-2"
                 >
                   <slot name="header" />
                 </div>

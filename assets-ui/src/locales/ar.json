@@ -13,7 +13,8 @@
         "dashboardTitle":"الصفحة الرئيسية",
         "loginTitle":"شاشة الدخول",
         "carsTitle":"شاشة السيارات",
-        "carsVotingTitle":"تصويت السيارات"
+        "carsVotingTitle":"تصويت السيارات",
+        "carsApprovalTitle":"الموافقة النهائية لصرف السيارات"
     },
 
     "cars": {
@@ -33,13 +34,14 @@
         "subordinateRequests":"طلبات الموظفين للسيارات",
         "employeeName":"اسم الموظف",
         "details":"تفاصيل الطلب",
-        "notes":"الغرض من الطلب",
+        "notes":"ملاحظات",
         "save":"حفظ",
         "date":"التاريخ",
         "approvalStatus":"موافقة الرئيس المباشر",
         "pending":"لم يتم الرد",
         "disableManagerResponse":"تم تعطيل التعديل لأنه تم بدء التصويت",
-        "disableRequest":"تم تعطيل التعديل لأنه تمت الموافقة على الطلب من قبل الرئيس المباشر"
+        "disableRequest":"تم تعطيل التعديل لأنه تمت الموافقة على الطلب من قبل الرئيس المباشر",
+        "managerApprovalTitle":"الموافقة على الطلب من قبل الرئيس المباشر"
     },
     "voting": {
         "title":"التصويت على السيارات",
@@ -50,6 +52,9 @@
         "voteCount":"عدد الأصوات",
         "totalVotes":"إجمالي عدد الأصوات",
         "obtainedVotes":"عدد الأصوات المكتسبة",
-        "vote":"التصويت"
+        "vote":"التصويت",
+        "pendingCaption":"قائمة الانتظار للتصويت",
+        "completedCaption":"قائمة التصاويت المنتهية"
+
     }
 }

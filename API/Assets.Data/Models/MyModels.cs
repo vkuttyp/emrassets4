@@ -85,15 +85,18 @@ public class CarVotingDetail
     public string Notes { get; set; } = "";
     public MyListItem? ResponseType { get; set; }=new();
 }
-public class FinalApproval
+public class CarVotingFinalDecision
 {
     public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
+    public string ManagerResponseId { get; set; } = "";
+    public int CarId { get; set; }
     public int SerialNo { get; set; }
+    public DateTime DecisionDate { get; set; }=DateTime.Now;
     public int UserId { get; set; }
-    public DateTime ApprovalDate { get; set; }
-    public string RequestId { get; set; }
-    public int StatusId { get; set; }
+    public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";
+    public MyListItem? ResponseType { get; set; } = new();
+    public List<CarVotingDetail> CarVotingDetails { get; set; } = new();
 }
 public class CarDeliveryDetail
 {

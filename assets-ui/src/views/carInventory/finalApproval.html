@@ -1,0 +1,29 @@
+<div class="grid grid-cols-2 gap-4">
+  <!-- Completed -->
+  <div>
+    <strong>{{$t("voting.completedCaption")}}</strong>
+    <table class="table">
+        <thead class="text-sm">
+            <th>{{$t("carRequest.date")}}</th>
+            <th>{{$t("carRequest.employeeName")}}</th>
+            <th>{{$t("carRequest.details")}}</th>
+            <th>{{$t("voting.totalVotes")}}</th>
+            <th>{{$t("voting.obtainedVotes")}}</th>
+            <th></th>
+          
+        </thead>
+        <tbody>
+            <tr class="text-sm" v-for="pending in votingCompleted" :key="pending.id">
+                <td>{{uq(pending?.carRequest?.requestDate).format('yyyy/MM/dd')}}</td>
+                <td>{{pending?.carRequest?.beneficiary?.name}}</td>
+                <td>{{pending?.carRequest?.requestDetail}}</td>
+                <td>{{pending.totalVotesCount}}</td>
+                <td>{{pending.totalVotesObtained}}</td>
+                <td>
+                   
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

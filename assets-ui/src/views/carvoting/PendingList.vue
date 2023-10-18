@@ -7,7 +7,7 @@ import uq from '@umalqura/core';
 import VoteModal from './VoteModal.vue'
 
 const carsStore = useCarsStore()
-const { carVotingPendingList, responseTypes } = storeToRefs(carsStore)
+const { votingIncomple, votingCompleted, responseTypes } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
@@ -36,7 +36,7 @@ const toggleModal = () => {
 };
 const requestSaved = (data) => {
   isOpen.value=false;
-  voting.value=data;
+  carsStore.getCarVotingPendingList();
 //   if(Array.isArray(subordinateCarRequests.value) && data) {
 //   subordinateCarRequests.value.forEach(emp => {
 //   emp.carRequests.find((request)=> request.id===data.requestId).carManagerResponse = data;
