@@ -19,6 +19,11 @@ public class CarCategory
     public int id { get; set; }
     public string name { get; set; }
 }
+public class CarType
+{
+    public int id { get; set; }
+    public string name { get; set; }
+}
 public class Department
 {
     public int id { get; set; }
@@ -31,6 +36,7 @@ public class Car
 {
     public int id { get; set; }
     public string name { get; set; }
+    public int CarTypeId { get; set; }
     public int CategoryId { get; set; }
     public string Model { get; set; }
     public int ManufactureYear { get; set; }
@@ -41,6 +47,7 @@ public class Car
     public int RegionId { get; set; }
     public int LocationId { get; set; }
     public CarCategory Category { get; set; }
+    public CarType CarType { get; set; }
 }
 
 public class CarRequest
@@ -96,7 +103,6 @@ public class CarVotingFinalDecision
     public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";
     public MyListItem? ResponseType { get; set; } = new();
-    public List<CarVotingDetail> CarVotingDetails { get; set; } = new();
 }
 public class CarDeliveryDetail
 {

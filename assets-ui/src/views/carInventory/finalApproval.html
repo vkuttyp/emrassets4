@@ -1,3 +1,10 @@
+<FinalDecisionModal 
+:decision="selectedDecision" 
+:isOpen="decisionModalOpen" 
+@saved="decisionSaved" 
+@error="decisionModaltError" 
+@closed="decisionModalClosed" />
+
 <div class="grid grid-cols-2 gap-4">
   <!-- Completed -->
   <div>
@@ -20,7 +27,7 @@
                 <td>{{pending.totalVotesCount}}</td>
                 <td>{{pending.totalVotesObtained}}</td>
                 <td>
-                   
+                   <button @click.prevent="newDecisionClicked(pending)">New Decision</button>
                 </td>
             </tr>
         </tbody>

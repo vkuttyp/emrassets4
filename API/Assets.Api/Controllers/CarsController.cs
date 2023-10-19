@@ -114,5 +114,24 @@ namespace Assets.Api.Controllers
             vote = await _db.CarVotingDetailUpdate(vote);
             return Ok(vote);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCars()
+        {
+            int.TryParse(User.FindFirst("UserId")?.Value, out var userId);
+            var items = await _db.GetCars(userId);
+
+            return Ok(items);
+        }
+        // Car Final Decision
+        [HttpPost]
+        public async Task<IActionResult> CarFinalDecision([FromBody] CarVotingFinalDecision? decision)
+        {
+            if (decision == null) throw new ArgumentNullException(nameof(decision));
+            int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
+            decision.UserId = userId;
+            //vote = await _db.CarVotingDetailUpdate(vote);
+            return Ok(decision);
+        }
     }
 }

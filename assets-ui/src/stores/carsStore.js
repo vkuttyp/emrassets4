@@ -12,13 +12,13 @@ export const useCarsStore = defineStore({
         subordinates: {},
         carRequests: {},
         responseTypes: {},
-        carVotingPendingList: {}
+        carVotingPendingList: {},
+        carsList: {}
     }),
     getters: {
         subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
         votingIncomple: (state) => Object.values(state.carVotingPendingList).filter((s) => s.totalVotesCount > s.totalVotesObtained),
         votingCompleted: (state) => Object.values(state.carVotingPendingList).filter((s) => s.totalVotesCount === s.totalVotesObtained),
-
       },
     actions: {
 
@@ -92,6 +92,24 @@ export const useCarsStore = defineStore({
             this.saving = { loading: true}
             return await fetchWrapper.post(`${baseUrl}/CarVoting`, vote)
             .catch(error => this.saving = { error})
+        },
+
+         //Final Decision
+         async carFinalDecision(decision) {
+            this.saving = { loading: true}
+            return await fetchWrapper.post(`${baseUrl}/CarFinalDecision`, decision)
+            .catch(error => this.saving = { error})
+        },
+
+        //Cars list:
+        async getCars() {
+            this.carsList = { loading: true };
+            let url = `${baseUrl}/GetCars`;
+            fetchWrapper.get(url)
+                .then(cars => { 
+                    this.carsList = cars;
+                })
+                .catch(error => this.carsList = { error })
         },
     }
 });

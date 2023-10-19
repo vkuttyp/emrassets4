@@ -1,0 +1,78 @@
+<Dialog 
+:isOpen="isOpen" 
+@closeModal="toggleModal"
+>
+
+<!-- Dialog Header -->
+<template #header>
+    <button @click="toggleModal">X</button>
+  <h2 class="font-bold text-lg text-center">{{$t("carRequest.managerApprovalTitle")}}</h2>
+  <div>
+    {{selectedCar?.name}}
+    <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
+        <div class="form-group flex justify-center items-center">
+                <table class="table">
+                    <tr class="flex justify-center items-center">
+                    <td v-for="t in carsStore.responseTypes" :key="t.id"> 
+                        
+                        <Field  name="responseTypeId"  type="radio" :checked="t.id === decision.responseTypeId" v-model="decision.responseTypeId" :value="t.id" />
+                        {{ t.name }}
+                    </td>
+                </tr>
+                </table>
+                <ErrorMessage name="responseTypeId" />
+           
+        </div>            
+        <div class="form-group">
+            <label>{{ $t("carRequest.notes") }}</label>
+            <Field name="notes" :value="props.decision.notes" type="text" class="form-control" :class="{ 'is-invalid': errors.notes }" />
+            <div class="invalid-feedback">{{errors.notes}}</div>
+        </div>            
+        <div class="form-group">
+            <button class="btn btn-primary disabled:bg-gray-200 my-3" :disabled="isSubmitting">
+                <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
+                {{ $t("carRequest.save") }}
+            </button>
+        </div>
+        <div v-if="errors?.apiError" class="alert alert-danger mt-3 mb-0">{{errors?.apiError?.Title}}</div>
+        <!--  -->
+    </Form>
+</div>
+      
+</template>
+
+<!-- Dialog Content -->
+<template #content>
+    <div class="grid grid-cols-2 overflow-x">
+        <div>
+            <table class="table-auto">
+                <thead>
+                  <th>{{$t("cars.carName")}}</th>
+                  <th>{{$t("cars.model")}}</th>
+                  <th>{{$t("cars.numberPlate")}}</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr v-for="car in carsList" :key="car.id">
+                    <td>{{ car?.category?.name }}</td>
+                    <td>{{ car?.model }}</td>
+                    <td>{{ car?.numberPlate }}</td>
+                    <td><button @click.prevent="selectCar(car)">Select</button></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        
+    </div>
+</template>
+
+<!-- Dialog Footer -->
+<template #footer>
+  <div class="text-center space-x-4">
+   
+  </div>
+  <div v-if="apiError" class="alert alert-danger mt-3 mb-0">{{apiError?.Title}}</div>
+  <!--  -->
+</template>
+
+</Dialog>
