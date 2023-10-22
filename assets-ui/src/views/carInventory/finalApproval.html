@@ -5,7 +5,7 @@
 @error="decisionModaltError" 
 @closed="decisionModalClosed" />
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-1 gap-4 m-4">
   <!-- Completed -->
   <div>
     <strong>{{$t("voting.completedCaption")}}</strong>
@@ -27,8 +27,35 @@
                 <td>{{pending.totalVotesCount}}</td>
                 <td>{{pending.totalVotesObtained}}</td>
                 <td>
-                   <button @click.prevent="newDecisionClicked(pending)">New Decision</button>
+                   <button v-if="pending.hasFinalDecision" @click.prevent="newDecisionClicked(pending)">New Decision</button>
                 </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <strong>{{$t("decision.decisionsListCaption")}}</strong>
+    <table class="table">
+        <thead class="text-sm">
+            <th>{{$t("decision.date")}}</th>
+            <th>{{$t("decision.employee")}}</th>
+            <th>{{$t("decision.status")}}</th>
+            <th>{{$t("cars.carType")}}</th>
+            <th>{{$t("cars.carName")}}</th>
+            <th>{{$t("cars.model")}}</th>
+            <th>{{$t("cars.numberPlate")}}</th>
+            <th></th>
+          
+        </thead>
+        <tbody>
+            <tr class="text-sm" v-for="dec in carsFinalDecisions" :key="dec.id">
+                <td>{{uq(dec?.decisionDate).format('yyyy/MM/dd')}}</td>
+                <td>{{dec?.beneficiary?.name}}</td>
+                <td>{{dec?.responseType?.name}}</td>
+                <td>{{dec.car?.carType.name}}</td>
+                <td>{{dec.car?.category?.name}}</td>
+                <td>{{dec.car?.model}}</td>
+                <td>{{dec.car?.numberPlate}}</td>
             </tr>
         </tbody>
     </table>

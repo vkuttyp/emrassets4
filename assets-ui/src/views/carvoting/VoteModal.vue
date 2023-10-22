@@ -12,7 +12,7 @@ import { useCarsStore, useAuthStore } from '@/stores'
 import * as Yup from 'yup';
 
 const carsStore=useCarsStore();
-carsStore.getResponseTypes(1);
+carsStore.getResponseTypes();
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)

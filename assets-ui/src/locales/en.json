@@ -18,6 +18,7 @@
     },
     "cars": {
         "cars":"Cars",
+        "carType":"Car Type",
         "request":"Request New Car",
         "carName": "Name",
         "model": "Model",
@@ -53,5 +54,11 @@
         "vote":"Vote",
         "pendingCaption":"Pending",
         "completedCaption":"Completed"
+    },
+    "decision":{
+        "decisionsListCaption":"Approved Requests",
+        "date":"Date",
+        "employee":"Employee Name",
+        "status":"Status"
     }
 }

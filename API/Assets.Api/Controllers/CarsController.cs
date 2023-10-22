@@ -130,8 +130,18 @@ namespace Assets.Api.Controllers
             if (decision == null) throw new ArgumentNullException(nameof(decision));
             int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
             decision.UserId = userId;
-            //vote = await _db.CarVotingDetailUpdate(vote);
+            decision = await _db.CarVotingFinalDecision_Update(decision);
             return Ok(decision);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CarVotingFinalDecision_List()
+        {
+            int userId;
+            int.TryParse(User.FindFirst("UserId")?.Value, out userId);
+            var deliveries = await _db.CarVotingFinalDecision_List(userId);
+
+            return Ok(deliveries);
         }
     }
 }

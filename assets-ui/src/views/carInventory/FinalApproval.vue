@@ -5,13 +5,13 @@ import { useCarsStore, useAuthStore } from '@/stores'
 import uq from '@umalqura/core';
 import FinalDecisionModal from './FinalDecisionModal.vue';
 const carsStore = useCarsStore()
-const { votingIncomple, votingCompleted, responseTypes } = storeToRefs(carsStore)
+const { votingCompleted, responseTypes, carsFinalDecisions } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
 
 carsStore.getCarVotingPendingList();
-
+carsStore.getCarsFinalDecisions();
 const decisionsList = ref([]);
 const decisionModalOpen = ref(false);
 const managerResponseId=ref(0);

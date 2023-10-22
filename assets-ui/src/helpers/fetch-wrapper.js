@@ -10,6 +10,7 @@ export const fetchWrapper = {
 function request(method) {
     return (url, body) => {
         const requestOptions = {
+            signal: AbortSignal.timeout(10000),
             method,
             headers: authHeader(url)
         };

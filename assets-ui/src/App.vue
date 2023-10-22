@@ -8,7 +8,7 @@ const authStore = useAuthStore();
 const { user: authUser } = storeToRefs(authStore)
 const menuOpen=ref(false);
 function toggleMenu(){
-    return !menuOpen.value;
+    menuOpen.value = !menuOpen.value;
 }
 
 </script>
@@ -31,12 +31,14 @@ function toggleMenu(){
             class="tracking-wide font-bold w-full block flex-grow lg:flex lg:flex-end lg:w-auto items-center mt-8 lg:mt-0"
             :class="menuOpen ? 'block': 'hidden'"
           >
+         
             <li v-if="authUser?.carBoardMember?.boardMemberType?.voteCount > 0" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/carsvoting`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsVotingTitle") }}</router-link>
             </li>
             <li v-if="authUser?.carBoardMember?.boardMemberType?.id===5" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/carsapproval`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsApprovalTitle") }}</router-link>
             </li>
+            <li class="flex-grow"></li>
             <li v-if="authUser" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("login.logout") }}</router-link>
             </li>

@@ -342,6 +342,45 @@ public class MyDb : IMyDb
         }
         return new();
     }
+
+    public async Task<CarVotingFinalDecision?> CarVotingFinalDecision_Update(CarVotingFinalDecision decision)
+    {
+        using (var cmd = MyCommand.CmdProc("CarVotingFinalDecisions_Update", connectionString))
+        {
+            var parjson = MyCommand.ToJson(decision);
+            cmd.Parameters.AddWithValue("@json", parjson);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<CarVotingFinalDecision>(json);
+                }
+            }
+        }
+        return null;
+    }
+
+    public async Task<List<CarVotingFinalDecision>> CarVotingFinalDecision_List(int userId)
+    {
+        using (var cmd = MyCommand.CmdProc("CarVotingFinalDecisions_Select", connectionString))
+        {
+            cmd.Parameters.AddWithValue("@userId", userId);
+            using (var con = cmd.Connection)
+            {
+                await con.OpenAsync();
+                var reader = await cmd.ExecuteReaderAsync();
+                var json = await MyCommand.GetJson(reader);
+                if (!string.IsNullOrWhiteSpace(json.ToString()))
+                {
+                    return JsonSerializer.Deserialize<List<CarVotingFinalDecision>>(json) ?? new();
+                }
+            }
+        }
+        return new();
+    }
 }
 public interface IMyDb
 {
@@ -365,5 +404,6 @@ public interface IMyDb
     Task<CarVotingDetail?> CarVotingDetailUpdate(CarVotingDetail voting);
 
     Task<List<Car>> GetCars(int userId);
-
+    Task<CarVotingFinalDecision?> CarVotingFinalDecision_Update(CarVotingFinalDecision decision);
+    Task<List<CarVotingFinalDecision>> CarVotingFinalDecision_List(int userId);
 }

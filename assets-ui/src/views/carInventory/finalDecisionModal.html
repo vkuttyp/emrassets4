@@ -38,14 +38,21 @@
         <!--  -->
     </Form>
 </div>
-      
+<select v-model="selectedCarType">
+  <option  value=0>All Cars</option>
+  <option v-for="t in carTypes" :key="t.id" :value="t.id">{{t.name}}</option>
+</select>
+<input type="text" v-model="carModel" placeholder="Model">
+
+<input type="text" v-model="numberPlate" placeholder="No plate">
 </template>
 
 <!-- Dialog Content -->
 <template #content>
-    <div class="grid grid-cols-2 overflow-x">
+    <div>
         <div>
-            <table class="table-auto">
+          
+            <table class="table">
                 <thead>
                   <th>{{$t("cars.carName")}}</th>
                   <th>{{$t("cars.model")}}</th>
@@ -53,7 +60,7 @@
                   <th></th>
                 </thead>
                 <tbody>
-                  <tr v-for="car in carsList" :key="car.id">
+                  <tr v-for="car in getCars" :key="car.id">
                     <td>{{ car?.category?.name }}</td>
                     <td>{{ car?.model }}</td>
                     <td>{{ car?.numberPlate }}</td>

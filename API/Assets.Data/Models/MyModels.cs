@@ -79,6 +79,8 @@ public class CarManagerResponse
     public CarVotingDetail? CurrentUserVoting { get; set; }
     public int TotalVotesCount { get; set; }
     public int TotalVotesObtained=> Votings?.Sum(a=>a.VoteCount) ?? 0;
+    public CarVotingFinalDecision? CarVotingFinalDecision { get; set; }
+    public bool HasFinalDecision => CarVotingFinalDecision != null;
 }
 public class CarVotingDetail
 {
@@ -102,7 +104,10 @@ public class CarVotingFinalDecision
     public int UserId { get; set; }
     public int ResponseTypeId { get; set; }
     public string Notes { get; set; } = "";
+    public int BeneficiaryId { get; set; }
     public MyListItem? ResponseType { get; set; } = new();
+    public Car? Car { get; set; }
+    public ArpUser? Beneficiary { get; set; }
 }
 public class CarDeliveryDetail
 {

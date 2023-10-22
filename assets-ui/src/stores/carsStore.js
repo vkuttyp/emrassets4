@@ -12,8 +12,10 @@ export const useCarsStore = defineStore({
         subordinates: {},
         carRequests: {},
         responseTypes: {},
+        carTypes: {},
         carVotingPendingList: {},
-        carsList: {}
+        carsList: {},
+        carsFinalDecisions: {}
     }),
     getters: {
         subordinateCarRequests: (state) => Object.values(state.subordinates).filter((s) => s.carRequests?.length),
@@ -32,14 +34,23 @@ export const useCarsStore = defineStore({
             .catch(error => this.carRequests = { error })
         },
 
-        async getResponseTypes(typeId) {
+        async getResponseTypes() {
             this.responseTypes = { loading: true };
-            let url = `${baseUrl}/GetListItems/${typeId}`;
+            let url = `${baseUrl}/GetListItems/1`;
              await fetchWrapper.get(url)
              .then(items => {
                 this.responseTypes=items;
              })
             .catch(error => this.responseTypes = { error })
+        },
+        async getCarTypes() {
+            this.carTypes = { loading: true };
+            let url = `${baseUrl}/GetListItems/2`;
+             await fetchWrapper.get(url)
+             .then(items => {
+                this.carTypes=items;
+             })
+            .catch(error => this.carTypes = { error })
         },
         async currentUserDeliveries() {
             this.userCars = { loading: true };
@@ -110,6 +121,17 @@ export const useCarsStore = defineStore({
                     this.carsList = cars;
                 })
                 .catch(error => this.carsList = { error })
+        },
+
+         //:CarVotingFinalDecision_List
+         async getCarsFinalDecisions() {
+            this.carsFinalDecisions = { loading: true };
+            let url = `${baseUrl}/CarVotingFinalDecision_List`;
+            fetchWrapper.get(url)
+                .then(d => { 
+                    this.carsFinalDecisions = d;
+                })
+                .catch(error => this.carsFinalDecisions = { error })
         },
     }
 });

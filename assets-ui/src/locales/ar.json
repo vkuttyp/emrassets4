@@ -19,6 +19,7 @@
 
     "cars": {
         "cars":"السيارات",
+        "carType":"النوع",
         "request":"طلب سيارة جديدة",
         "carName": "نوع السيارة",
         "model": "موديلها",
@@ -56,5 +57,11 @@
         "pendingCaption":"قائمة الانتظار للتصويت",
         "completedCaption":"قائمة التصاويت المنتهية"
 
+    },
+    "decision":{
+        "decisionsListCaption":"الطلبات التي تمت الموافقة عليها",
+        "date":"التاريخ",
+        "employee":"اسم الموظف",
+        "status":"الحالة"
     }
 }

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin');
+
 export default {
   content: [
     "./index.html",
@@ -20,7 +21,7 @@ export default {
         backgroundColor: ['disabled'],
     },
 },
-  plugins: [
+  plugins: [require("./plugin"),
     plugin(function({ addBase }) {
       addBase({
          'html': { fontSize: "16px" },

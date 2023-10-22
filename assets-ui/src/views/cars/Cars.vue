@@ -15,7 +15,7 @@ authUser.value.carDeliveries = userCars
 // const subordinates = storeToRefs(assetsStore);
 carsStore.currentUserDeliveries()
 carsStore.getSubordinates()
-carsStore.getResponseTypes(1);
+carsStore.getResponseTypes();
 function openNewRequest(){
   request.value=null;
   isOpen.value=true;

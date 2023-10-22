@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineAsyncComponent,computed,reactive,watch,createApp, h,defineComponent } from 'vue';
+import { ref, defineAsyncComponent,computed,reactive } from 'vue';
 import { storeToRefs } from 'pinia'
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useCarsStore } from '@/stores'
@@ -7,20 +7,29 @@ import * as Yup from 'yup';
 
 const Dialog = defineAsyncComponent(() => import('@/components/Dialog.vue'))
 const carsStore=useCarsStore();
-const { carsList } = storeToRefs(carsStore)
-carsStore.getResponseTypes(1);
+const { carsList, carTypes } = storeToRefs(carsStore)
+carsStore.getResponseTypes();
+carsStore.getCarTypes();
 carsStore.getCars();
-const filters = reactive([
-  {id: 0,name: 'all'},
-  {id: 1, name: 'outside'},
-  { id: 2, name: 'inside'}
-])
 const selectCar = (car) => {
   selectedCar.value = car
 }
 let selectedCar = ref(null)
 
-  
+function carTypeChanged(event){
+  let typeId=event.target.value;
+  carsList.value.filter((car)=> car.carType===typeId);
+}
+const selectedCarType = ref(0);
+const numberPlate = ref('');
+const carModel = ref('');
+const getCars = computed(() => {
+      if (selectedCarType.value>0) {
+        return carsList.value.filter((car) => car.carTypeId === selectedCarType.value && car.numberPlate.includes(numberPlate.value) && car.model.includes(carModel.value));
+      }
+      return carsList.value.filter((car)=> car.numberPlate.includes(numberPlate.value) && car.model.includes(carModel.value));
+    });
+
 const emit = defineEmits(["saved","error","closed"]);
 const props = defineProps({
     isOpen: {
@@ -67,3 +76,85 @@ async function onSubmit(values) {
 
 </script>
 <template src="./finalDecisionModal.html"></template>
+<style lang="scss">
+$table-header: #1976D2;
+$table-header-border: #1565C0;
+$table-border: #d9d9d9;
+$row-bg: #f4f2f1;
+$header-bg: #1565C0;
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+caption {
+  display: none;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.table-container {
+  //display: block;
+  margin: 1em auto;
+  width: 90%;
+  max-width: 600px;
+  border-collapse: collapse;
+}
+
+.flag-icon {
+  margin-right: 0.1em;
+}
+
+td {
+  border: 1px solid $table-border;
+  padding: 0.5em;
+}
+
+th {
+  background: $header-bg;
+  color: white;
+  padding: 0.5em;
+  border: 1px solid $table-header-border;
+}
+
+.flex-row {
+  width: 25%;
+}
+
+.flex-row, .flex-cell {
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  
+  .table-container {
+    //display: block;
+  }
+  th, td {
+    width: auto;
+    display: block;
+    border: 0;
+  }
+  
+  th {
+    border-left: solid 1px $table-header-border;
+    border-right: solid 1px $table-header-border;
+    border-bottom: solid 1px $table-header-border;
+  }
+  
+  td {
+    border-left: solid 1px $table-border;
+    border-right: solid 1px $table-border;
+    border-bottom: solid 1px $table-border;
+  }
+  
+  .flex-row {
+    width: 100%;
+  }
+}
+</style>
