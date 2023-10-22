@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores';
 import { storeToRefs } from 'pinia'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
+import DropdownMenu from "@/components/DropdownMenu.vue"
 const authStore = useAuthStore();
 const { user: authUser } = storeToRefs(authStore)
 const menuOpen=ref(false);
@@ -39,8 +40,10 @@ function toggleMenu(){
               <router-link :to="`/${$i18n.locale}/carsapproval`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsApprovalTitle") }}</router-link>
             </li>
             <li class="flex-grow"></li>
-            <li v-if="authUser" class="mr-12 mb-6 lg:mb-0">
-              <router-link :to="`/${$i18n.locale}/logout`" class="text-copy-primary hover:text-gray-600">{{ $t("login.logout") }}</router-link>
+            <li v-if="authUser" class="mr-12 mb-6 lg:mb-0 flex items-center">
+              <DropdownMenu :authUser="authUser" /> {{ authUser.name }} 
+              <!-- <img src="@/assets/img/user_avatar.png" class="avatar" alt=""> 
+              <router-link :to="`/${$i18n.locale}/logout`" class="mx-3 text-blue-600 text-sm hover:text-gray-600">{{ authUser.name }}</router-link> -->
             </li>
             <li class="m-2">
               <LanguageSwitcher />
@@ -60,4 +63,10 @@ function toggleMenu(){
   </template>
 <style>
 @import '@/assets/base.css';
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 </style>

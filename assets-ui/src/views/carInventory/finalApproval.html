@@ -27,7 +27,7 @@
                 <td>{{pending.totalVotesCount}}</td>
                 <td>{{pending.totalVotesObtained}}</td>
                 <td>
-                   <button v-if="pending.hasFinalDecision" @click.prevent="newDecisionClicked(pending)">New Decision</button>
+                   <button v-if="pending.hasFinalDecision" @click.prevent="newDecisionClicked(pending)">{{$t("decision.approve")}}</button>
                 </td>
             </tr>
         </tbody>

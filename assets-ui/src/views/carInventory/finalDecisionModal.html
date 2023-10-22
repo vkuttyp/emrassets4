@@ -6,7 +6,7 @@
 <!-- Dialog Header -->
 <template #header>
     <button @click="toggleModal">X</button>
-  <h2 class="font-bold text-lg text-center">{{$t("carRequest.managerApprovalTitle")}}</h2>
+  <h2 class="font-bold text-lg text-center">{{$t("decision.decisionModalCaption")}}</h2>
   <div>
     {{selectedCar?.name}}
     <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
@@ -39,12 +39,12 @@
     </Form>
 </div>
 <select v-model="selectedCarType">
-  <option  value=0>All Cars</option>
+  <option  value=0>{{$t("decision.allCars")}}</option>
   <option v-for="t in carTypes" :key="t.id" :value="t.id">{{t.name}}</option>
 </select>
-<input type="text" v-model="carModel" placeholder="Model">
+<input type="text" v-model="carModel" :placeholder="$t('decision.carModel')">
 
-<input type="text" v-model="numberPlate" placeholder="No plate">
+<input type="text" v-model="numberPlate" :placeholder="$t('decision.numberPlate')">
 </template>
 
 <!-- Dialog Content -->
@@ -54,17 +54,19 @@
           
             <table class="table">
                 <thead>
+                  <th>#</th>
                   <th>{{$t("cars.carName")}}</th>
                   <th>{{$t("cars.model")}}</th>
                   <th>{{$t("cars.numberPlate")}}</th>
                   <th></th>
                 </thead>
                 <tbody>
-                  <tr v-for="car in getCars" :key="car.id">
+                  <tr v-for="(car,index) in getCars" :key="car.id">
+                    <td>{{index+1}}</td>
                     <td>{{ car?.category?.name }}</td>
                     <td>{{ car?.model }}</td>
                     <td>{{ car?.numberPlate }}</td>
-                    <td><button @click.prevent="selectCar(car)">Select</button></td>
+                    <td><button @click.prevent="selectCar(car)">{{$t("decision.select")}}</button></td>
                   </tr>
                 </tbody>
               </table>

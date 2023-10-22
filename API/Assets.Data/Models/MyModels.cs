@@ -60,8 +60,10 @@ public class CarRequest
     public string? RequestDetail { get; set; } = "";
     public string? Notes { get; set; } = "";
     public int DepartmentId { get; set; }
+    public int CarId { get; set; }
     public CarManagerResponse? CarManagerResponse { get; set; }=new CarManagerResponse();
     public ArpUser? Beneficiary { get; set; }
+    
 }
 public class CarManagerResponse
 {

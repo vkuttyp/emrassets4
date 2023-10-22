@@ -5,7 +5,7 @@
 <script setup>
 import { ref, defineAsyncComponent, computed } from 'vue';
 import { Form, Field } from 'vee-validate';
-// import Dialog from '@/components/Dialog.vue';
+import i18n from '@/locales/i18'
 import Button from '@/components/Button.vue';
 import { useCarsStore } from '@/stores'
 import * as Yup from 'yup';
@@ -29,8 +29,8 @@ const props = defineProps({
   emit("closed")
 };
 const schema = Yup.object().shape({
-    requestDetail: Yup.string().required('detail is required'),
-    notes: Yup.string().required('notes is required'),
+    requestDetail: Yup.string().required(i18n.global.t("carRequest.detailRequired")),
+    notes: Yup.string(),
 });
 const apiError = ref(null)
 async function onSubmit(values) {

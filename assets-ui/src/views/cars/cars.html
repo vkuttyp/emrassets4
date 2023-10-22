@@ -9,7 +9,7 @@
 
 <div class="grid grid-auto-fit gap-4 m-4">
 <div>
-  <p class="text-2xl p-3">{{ authUser.name }}</p>
+  <!-- <p class="text-2xl p-3">{{ authUser.name }}</p> -->
   <div class="flex justify-between">
     <div><strong>{{$t("cars.cars")}}</strong></div>
     <div>
@@ -60,7 +60,7 @@
       <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>
       <td>{{r.carManagerResponse?.totalVotesCount}}</td>
       <td>{{r.carManagerResponse?.totalVotesObtained}}</td>
-      <td><button @click="requestClicked(r)">Open</button></td>
+      <td><button  @click="requestClicked(r)">&#128712</button></td>
 
     </tr>
   </tbody>

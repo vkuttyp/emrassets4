@@ -4,7 +4,9 @@
     "username":"اسم المستخدم",
     "password":"كلمة المرور",
     
-    "logout": "تسجيل خروج"
+    "logout": "تسجيل خروج",
+    "userNameRequied":"اسم المستخدم إجباري",
+    "passwordRequired":" كلمة المرور إجباري"
     },
     "common": {
         "ar":"العربية",
@@ -31,6 +33,7 @@
         
     },
     "carRequest": {
+        "detailRequired":"تفاصيل الطلب إجباري",
         "carRequestsList":"قائمة طلبات السيارات",
         "subordinateRequests":"طلبات الموظفين للسيارات",
         "employeeName":"اسم الموظف",
@@ -59,6 +62,12 @@
 
     },
     "decision":{
+        "decisionModalCaption":"الموافقة على التصويت",
+        "carModel":"موديل السيارة",
+        "numberPlate":"رقم اللوحة",
+        "allCars":"جميع السيارات",
+        "select":"اختيار السيارة",
+        "approve":"الموافقة النهائية",
         "decisionsListCaption":"الطلبات التي تمت الموافقة عليها",
         "date":"التاريخ",
         "employee":"اسم الموظف",

@@ -4,7 +4,9 @@
     "username":"User Name",
     "password":"Password",
     
-    "logout": "Logout"
+    "logout": "Logout",
+    "userNameRequied":"User name required",
+    "passwordRequired":"Password required"
     },
     "common": {
         "ar":"Arabic",
@@ -29,6 +31,7 @@
         "subordinates":"Subordinates"
     },
     "carRequest": {
+        "detailRequired":"Request description is required",
         "carRequestsList":"Car Requests List",
         "subordinateRequests":"Subordinate Car Requests",
         "employeeName":"ُEmployee Name",
@@ -56,6 +59,12 @@
         "completedCaption":"Completed"
     },
     "decision":{
+        "decisionModalCaption":"Approve Voting",
+        "carModel":"Car Model",
+        "numberPlate":"Number Plate",
+        "allCars":"All Cars",
+        "select":"Select Car",
+        "approve":"Approve",
         "decisionsListCaption":"Approved Requests",
         "date":"Date",
         "employee":"Employee Name",

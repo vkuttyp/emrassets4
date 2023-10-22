@@ -38,7 +38,7 @@ const beenVoted = computed(() => {
 const schema = Yup.object().shape({
   requestId: Yup.string(),
     responseTypeId: Yup.number().moreThan(0),
-    notes: Yup.string().required('notes is required'),
+    notes: Yup.string(),
 });
 const apiError = ref(null)
 async function onSubmit(values) {
