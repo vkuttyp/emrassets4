@@ -66,10 +66,8 @@
   </template>
   
   <script>
-  import { mixin as clickaway } from 'vue3-click-away'
   
   export default {
-    mixins: [ clickaway ],
     data() {
       return {
         isVisible: false,

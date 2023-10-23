@@ -16,12 +16,12 @@ export const useCarsStore = defineStore({
     carVotingPendingList: {},
     carsList: {},
     carsFinalDecisions: {},
-    // carReqState: {
-    //   loading: false,
-    //   error: null,
-    //   item: {},
-    //   list: []
-    // }
+    carReqState: {
+      loading: false,
+      error: null,
+      item: {},
+      list: []
+    }
   }),
   getters: {
     subordinateCarRequests: (state) =>
@@ -36,15 +36,29 @@ export const useCarsStore = defineStore({
       )
   },
   actions: {
+    async requestCar(request) {
+      this.carReqState.loading = true
+      await fetchWrapper
+        .post(`${baseUrl}/RequestCar`, request)
+        .then((data) => {
+          const index = this.carReqState.list.findIndex((e) => e.id === data.id)
+          if (index === -1) {
+            this.carReqState.list.unshift(data)
+          } else {
+            this.carReqState.list[index] = data
+          }
+        })
+        .catch((error) => (this.carReqState.error = error))
+    },
     async carRequestDetailsByBeneficiary(beneficiaryId) {
-      this.carRequests = { loading: true }
+      this.carReqState.loading = true
       let url = `${baseUrl}/CarRequestDetailsByBeneficiary/${beneficiaryId}`
       await fetchWrapper
         .get(url)
         .then((items) => {
-          this.carRequests = items
+          this.carReqState.list = items
         })
-        .catch((error) => (this.carRequests = { error }))
+        .catch((error) => (this.carReqState.error = error))
     },
 
     async getResponseTypes() {
@@ -90,27 +104,13 @@ export const useCarsStore = defineStore({
         })
         .catch((error) => (this.subordinates = { error }))
     },
-    async requestCar(request) {
-      this.carRequest = { loading: true }
-      return await fetchWrapper
-        .post(`${baseUrl}/RequestCar`, request)
-        .catch((error) => (this.carRequest = { error }))
-    },
-    // async requestCar2(request) {
-    //   this.carReqState.loading = true
-    //   await fetchWrapper
+    // async requestCar(request) {
+    //   this.carRequest = { loading: true }
+    //   return await fetchWrapper
     //     .post(`${baseUrl}/RequestCar`, request)
-    //     .then((data) => {
-    //       // this.carReqState.list.push(data);
-    //       const index = this.carReqState.list.findIndex((e) => e.id === data.id)
-    //       if (index === -1) {
-    //         this.carReqState.list.unshift(data)
-    //       } else {
-    //         this.carReqState.list[index] = data
-    //       }
-    //     })
-    //     .catch((error) => (this.carReqState.error = error))
+    //     .catch((error) => (this.carRequest = { error }))
     // },
+    
     //Manager Response:
     async carManagerResponse(managerResponse) {
       this.carRequest = { loading: true }

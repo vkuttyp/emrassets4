@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import uq from '@umalqura/core';
 import { useCarsStore, useAuthStore } from '@/stores'
 const carsStore = useCarsStore()
-const { userCars, subordinates, subordinateCarRequests, responseTypes, carRequests } = storeToRefs(carsStore)
+const { userCars, subordinates, subordinateCarRequests, responseTypes, carReqState } = storeToRefs(carsStore)
 
 const authStore = useAuthStore()
 const { user: authUser } = storeToRefs(authStore)
@@ -27,12 +27,12 @@ const toggleModal = () => {
 
 const requestSaved = (data) => {
   isOpen.value=false;
-  const index = carRequests.value.findIndex((e) => e.id === data.id);
-    if (index === -1) {
-      carRequests.value.unshift(data);
-    } else {
-        carRequests.value[index] = data;
-    }
+  // const index = carRequests.value.findIndex((e) => e.id === data.id);
+  //   if (index === -1) {
+  //     carRequests.value.unshift(data);
+  //   } else {
+  //       carRequests.value[index] = data;
+  //   }
 };
 
 const requestModalClosed = ()=> {

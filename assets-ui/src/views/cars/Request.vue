@@ -41,7 +41,7 @@ async function onSubmit(values) {
     mrequest.notes=notes;
     return await carsStore.requestCar(mrequest)
         .then(data => {
-            if(data.error) {
+            if(data?.error) {
             emit('error',data.error);
             apiError.value=data.error;
             // setErrors({ apiError: data.error });

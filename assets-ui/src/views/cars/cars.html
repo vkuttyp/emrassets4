@@ -54,7 +54,7 @@
     <th></th>
   </thead>
   <tbody>
-    <tr v-for="r in carRequests" :key="r.id">
+    <tr v-for="r in carReqState.list" :key="r.id">
       <td>{{uq(r.requestDate).format('yyyy/MM/dd')}}</td>
       <td>{{r.requestDetail}}</td>
       <td> <label :class="requestStatusStyle(r)"> {{getRequestCaption(r)}}</label></td>

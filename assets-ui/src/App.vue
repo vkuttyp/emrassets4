@@ -41,7 +41,7 @@ function toggleMenu(){
             </li>
             <li class="flex-grow"></li>
             <li v-if="authUser" class="mr-12 mb-6 lg:mb-0 flex items-center">
-              <DropdownMenu :authUser="authUser" /> {{ authUser.name }} 
+              <DropdownMenu :authUser="authUser" />
               <!-- <img src="@/assets/img/user_avatar.png" class="avatar" alt=""> 
               <router-link :to="`/${$i18n.locale}/logout`" class="mx-3 text-blue-600 text-sm hover:text-gray-600">{{ authUser.name }}</router-link> -->
             </li>
