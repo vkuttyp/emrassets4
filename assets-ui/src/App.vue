@@ -39,6 +39,9 @@ function toggleMenu(){
             <li v-if="authUser?.carBoardMember?.boardMemberType?.id===5" class="mr-12 mb-6 lg:mb-0">
               <router-link :to="`/${$i18n.locale}/carsapproval`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsApprovalTitle") }}</router-link>
             </li>
+            <li v-if="authUser?.carBoardMember?.boardMemberType?.id===5" class="mr-12 mb-6 lg:mb-0">
+              <router-link :to="`/${$i18n.locale}/carsAndEmployees`" class="text-copy-primary hover:text-gray-600">{{ $t("common.carsAndEmployees") }}</router-link>
+            </li>
             <li class="flex-grow"></li>
             <li v-if="authUser" class="mr-12 mb-6 lg:mb-0 flex items-center">
               <DropdownMenu :authUser="authUser" />

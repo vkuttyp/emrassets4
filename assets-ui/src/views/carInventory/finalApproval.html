@@ -5,7 +5,7 @@
 @error="decisionModaltError" 
 @closed="decisionModalClosed" />
 
-<div class="grid grid-cols-1 gap-4 m-4">
+<div class="grid grid-cols-2 gap-4 m-4">
   <!-- Completed -->
   <div>
     <strong>{{$t("voting.completedCaption")}}</strong>
@@ -16,7 +16,7 @@
             <th>{{$t("carRequest.details")}}</th>
             <th>{{$t("voting.totalVotes")}}</th>
             <th>{{$t("voting.obtainedVotes")}}</th>
-            <th></th>
+            <th>{{$t("decision.status")}}</th>
           
         </thead>
         <tbody>
@@ -27,7 +27,8 @@
                 <td>{{pending.totalVotesCount}}</td>
                 <td>{{pending.totalVotesObtained}}</td>
                 <td>
-                   <button v-if="pending.hasFinalDecision" @click.prevent="newDecisionClicked(pending)">{{$t("decision.approve")}}</button>
+                   <button v-if="!pending.hasFinalDecision" @click.prevent="newDecisionClicked(pending)">{{$t("decision.approve")}}</button>
+                   <p v-if="pending.hasFinalDecision">{{$t("decision.approved")}}</p>
                 </td>
             </tr>
         </tbody>

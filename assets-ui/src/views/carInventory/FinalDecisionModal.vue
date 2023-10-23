@@ -4,12 +4,14 @@ import { storeToRefs } from 'pinia'
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useCarsStore } from '@/stores'
 import * as Yup from 'yup';
+import i18n from '@/locales/i18'
 const Dialog = defineAsyncComponent(() => import('@/components/Dialog.vue'))
 const carsStore=useCarsStore();
 const { carsList, carTypes } = storeToRefs(carsStore)
 carsStore.getResponseTypes();
 carsStore.getCarTypes();
 carsStore.getCars();
+const t = i18n.global.t;
 const selectCar = (car) => {
   selectedCar.value = car
 }
@@ -45,15 +47,32 @@ const props = defineProps({
 };
 
 const schema = Yup.object().shape({
-    responseTypeId: Yup.number().moreThan(0),
+    responseTypeId: Yup.number().moreThan(0,t('decision.approval')),
     notes: Yup.string(),
 });
 const apiError = ref(null)
+const myAlert = ref({
+  visible: false,
+  title: '',
+  text: ''
+})
+function showAlert(title, text){
+  myAlert.value.visible=true;
+  myAlert.value.title=title;
+  myAlert.value.text=text;
+  setTimeout(() => myAlert.value.visible = false, 1000)
+}
 async function onSubmit(values) {
+   let carId= selectedCar.value?.id ?? 0;
+   
     const { responseTypeId, notes } = values;
+    if(carId ===0 && responseTypeId===1){
+    showAlert(t('decision.alertTitle'), t('decision.alertText'))
+    return;
+   }
     props.decision.responseTypeId=responseTypeId;
     props.decision.notes=notes;
-    props.decision.carId=selectedCar.value.id;
+    props.decision.carId=carId;
     return await carsStore.carFinalDecision(props.decision)
         .then(data => {
             if(data.error) {
@@ -75,85 +94,3 @@ async function onSubmit(values) {
 
 </script>
 <template src="./finalDecisionModal.html"></template>
-<style lang="scss">
-$table-header: #1976D2;
-$table-header-border: #1565C0;
-$table-border: #d9d9d9;
-$row-bg: #f4f2f1;
-$header-bg: #1565C0;
-
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-caption {
-  display: none;
-}
-
-div {
-  box-sizing: border-box;
-}
-
-.table-container {
-  //display: block;
-  margin: 1em auto;
-  width: 90%;
-  max-width: 600px;
-  border-collapse: collapse;
-}
-
-.flag-icon {
-  margin-right: 0.1em;
-}
-
-td {
-  border: 1px solid $table-border;
-  padding: 0.5em;
-}
-
-th {
-  background: $header-bg;
-  color: white;
-  padding: 0.5em;
-  border: 1px solid $table-header-border;
-}
-
-.flex-row {
-  width: 25%;
-}
-
-.flex-row, .flex-cell {
-  text-align: center;
-}
-
-@media only screen and (max-width: 767px) {
-  
-  .table-container {
-    //display: block;
-  }
-  th, td {
-    width: auto;
-    display: block;
-    border: 0;
-  }
-  
-  th {
-    border-left: solid 1px $table-header-border;
-    border-right: solid 1px $table-header-border;
-    border-bottom: solid 1px $table-header-border;
-  }
-  
-  td {
-    border-left: solid 1px $table-border;
-    border-right: solid 1px $table-border;
-    border-bottom: solid 1px $table-border;
-  }
-  
-  .flex-row {
-    width: 100%;
-  }
-}
-</style>

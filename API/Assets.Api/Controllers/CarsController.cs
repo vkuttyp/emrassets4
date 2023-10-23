@@ -143,5 +143,24 @@ namespace Assets.Api.Controllers
 
             return Ok(deliveries);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCarsAndEmployees()
+        {
+            int.TryParse(User.FindFirst("UserId")?.Value, out var userId);
+            var items = await _db.GetCarsAndEmployees(userId);
+
+            return Ok(items);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CarReturn([FromBody] CarReturnDetail detail)
+        {
+            if (detail == null) throw new ArgumentNullException(nameof(detail));
+            int.TryParse(User.FindFirst("UserId")?.Value, out int userId);
+            detail.UserId = userId;
+            detail = await _db.CarReturn_Update(detail);
+            return Ok(detail);
+        }
     }
 }

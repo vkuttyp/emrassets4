@@ -19,9 +19,9 @@ export const useCarsStore = defineStore({
     carReqState: {
       loading: false,
       error: null,
-      item: {},
       list: []
-    }
+    },
+    carsAndEmployees: {}
   }),
   getters: {
     subordinateCarRequests: (state) =>
@@ -88,8 +88,6 @@ export const useCarsStore = defineStore({
         .get(url)
         .then((cars) => {
           this.userCars = cars
-          // this.getSubordinates();
-          //  console.log(this.users)
         })
         .catch((error) => (this.userCars = { error }))
     },
@@ -170,6 +168,18 @@ export const useCarsStore = defineStore({
           this.carsFinalDecisions = d
         })
         .catch((error) => (this.carsFinalDecisions = { error }))
+    },
+
+    //:cars with employees
+    async getCarsAndEmployees() {
+      this.carsAndEmployees = { loading: true }
+      let url = `${baseUrl}/GetCarsAndEmployees`
+      fetchWrapper
+        .get(url)
+        .then((d) => {
+          this.carsAndEmployees = d
+        })
+        .catch((error) => (this.carsAndEmployees = { error }))
     }
   }
 })

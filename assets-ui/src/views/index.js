@@ -6,3 +6,4 @@ export { default as CarRequest } from './cars/Request.vue';
 export { default as ManagerResponse } from './cars/ManagerResponse.vue';
 export { default as CarVoting } from './carvoting/Voting.vue';
 export { default as CarFinalApproval } from './carInventory/FinalApproval.vue';
+export { default as CarsAndEmployees } from './carInventory/CarsAndEmployees.vue';

@@ -16,7 +16,8 @@
         "loginTitle":"Login Page",
         "carsTitle":"Cars Page",
         "carsVotingTitle":"Cars Voting",
-        "carsApprovalTitle":"Cars Final Approval"
+        "carsApprovalTitle":"Cars Final Approval",
+        "carsAndEmployees":"Cars and Employees"
     },
     "cars": {
         "cars":"Cars",
@@ -28,7 +29,8 @@
         "date": "Date",
         "employeeName":"Name",
         "subordinateName":"Name",
-        "subordinates":"Subordinates"
+        "subordinates":"Subordinates",
+        "carDetails":"Car Details"
     },
     "carRequest": {
         "detailRequired":"Request description is required",
@@ -68,6 +70,19 @@
         "decisionsListCaption":"Approved Requests",
         "date":"Date",
         "employee":"Employee Name",
-        "status":"Status"
+        "status":"Status",
+        "approval":"Please select approval status",
+        "alertTitle":"Car not selected",
+        "alertText":"Please select a Car",
+        "approved":"Approved"
+    },
+    "carReport":{
+        "title":"Cars Report",
+        "carType":"Car Type",
+        "carName": "Name",
+        "model": "Model",
+        "numberPlate":"Number Plate",
+        "deliveryDate":"Delivery Date",
+        "employeeName":"Employee Name"
     }
 }

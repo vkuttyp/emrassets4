@@ -48,6 +48,8 @@ public class Car
     public int LocationId { get; set; }
     public CarCategory Category { get; set; }
     public CarType CarType { get; set; }
+    public List<CarDeliveryDetail> Deliveries { get; set;}
+    public CarDeliveryDetail? LastDelivery => Deliveries?.LastOrDefault();
 }
 
 public class CarRequest
@@ -121,5 +123,16 @@ public class CarDeliveryDetail
     public int UserId { get; set; }
     public string Notes { get; set; } = "";
     public int CarId { get; set; }
-    public Car Car { get; set; }
+    public Car? Car { get; set; }
+    public ArpUser? User { get; set; }
+}
+public class CarReturnDetail
+{
+    public string id { get; set; } = Guid.NewGuid().ToString("N").ToUpper();
+    public DateTime ReturnDate { get; set; }=DateTime.Now;
+    public string DeliveryId { get; set; } = "";
+    public int ReasonId { get; set; }
+    public int StatusId { get; set; }
+    public string Notes { get; set; } = "";
+    public int UserId { get; set; }
 }

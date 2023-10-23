@@ -16,7 +16,8 @@
         "loginTitle":"شاشة الدخول",
         "carsTitle":"شاشة السيارات",
         "carsVotingTitle":"تصويت السيارات",
-        "carsApprovalTitle":"الموافقة النهائية لصرف السيارات"
+        "carsApprovalTitle":"الموافقة النهائية لصرف السيارات",
+        "carsAndEmployees":"السيارات مع الموظفين"
     },
 
     "cars": {
@@ -29,8 +30,8 @@
         "date": "التاريخ",
         "employeeName":"الاسم",
         "subordinateName":"الاسم",
-        "subordinates":"الموظفين"
-        
+        "subordinates":"الموظفين",
+        "carDetails":"تفاصيل السيارة"
     },
     "carRequest": {
         "detailRequired":"تفاصيل الطلب إجباري",
@@ -71,6 +72,19 @@
         "decisionsListCaption":"الطلبات التي تمت الموافقة عليها",
         "date":"التاريخ",
         "employee":"اسم الموظف",
-        "status":"الحالة"
+        "status":"الحالة",
+        "approval":"يجب اختيار حالة الموافقة",
+        "alertTitle":"لم يتم اختيار سيارة",
+        "alertText":"فضلاً قم باختيار السيارة",
+        "approved":"تمت الموافقة"
+    },
+    "carReport":{
+        "title":"كشف بالسيارات ",
+        "carType":"النوع",
+        "carName": "نوع السيارة",
+        "model": "موديلها",
+        "numberPlate":"رقم اللوحة",
+        "deliveryDate":"تاريخ التسليم",
+        "employeeName":"اسم الموظف"
     }
 }
