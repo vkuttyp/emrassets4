@@ -15,7 +15,7 @@ function toggleMenu(){
 </script>
 <template>
 <div id="app" class="font-Aljazeera text-gray-800" :dir="$i18n.locale=='ar'?'rtl':'ltr'">
-      <header class="border-t-4 border-green-700 bg-white z-10 absolute w-full shadow-md">
+      <header v-if="authUser" class="border-t-4 border-green-700 bg-white z-10 absolute w-full shadow-md">
         <nav class="px-8 flex py-8">
           <div class="mb-0 lg:mb-6 xl:mb-0">
             <router-link :to="`/${$i18n.locale}`" class="font-bold text-xl flex items-end">
