@@ -9,6 +9,10 @@ namespace Assets.Api
     {
         public static IServiceCollection AddMyServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
             services.AddTransient<ExceptionMiddleware>();
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!));
             services.AddAuthentication(x =>

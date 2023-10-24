@@ -6,22 +6,11 @@
 <pre>{{authUser}}</pre>
 </Modal> -->
 <ManagerResponse :carManagerResponse="carManagerResponse" :requestId="requestId" :isOpen="isOpen2" @saved="requestSaved2" @error="requestError2" @closed="requestModalClosed2"></ManagerResponse>
+<CarRequest :request="request" :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
 
 <div class="grid grid-auto-fit gap-4 m-4">
 <div>
-  <!-- <p class="text-2xl p-3">{{ authUser.name }}</p> -->
-  <div class="flex justify-between">
-    <div><strong>{{$t("cars.cars")}}</strong></div>
-    <div>
-      <CarRequest :request="request" :isOpen="isOpen" @saved="requestSaved" @error="requestError" @closed="requestModalClosed"></CarRequest>
-      <a class="text-sm" @click="openNewRequest">{{$t("cars.request")}}</a>
-    </div>
-
-
-  </div>
-  
-  
-  
+  <h3>{{$t("cars.cars")}}</h3>
   <table class="table text-sm">
     <thead>
       <th>{{$t("cars.carName")}}</th>

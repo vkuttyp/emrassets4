@@ -1,8 +1,30 @@
 using Assets.Api;
 using Assets.Data.Models;
+using Serilog;
+using Serilog.Events;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
+Log.Logger = new LoggerConfiguration()
+    //.Filter.ByExcluding(evt =>
+    //{
+
+    //    evt.Properties.TryGetValue("RequestPath", out var endpoint);
+    //    var path = LogEnricher.GetPropertyValue(endpoint);
+    //    evt.Properties.TryGetValue("ClientIP", out var ip);
+    //    bool isNotification = path.StartsWith("/api/cases/GetCaseByIdForNotification");
+    //    return !path.StartsWith("/api") || isNotification || string.IsNullOrWhiteSpace(ip?.ToString());
+    //})
+    .WriteTo.Console(
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} {Indent:l}{Message}  [IP:{ClientIP} User: {UserId}] {NewLine}{Exception}")
+    .WriteTo.File(
+    @"/var/www/logs/log-.txt", Serilog.Events.LogEventLevel.Verbose,
+    "{Timestamp:yyyy-MM-dd HH:mm:ss} {Indent:l}{Message}  [IP:{ClientIP} User: {UserId}] {NewLine}{Exception}", null, null, null, false, false, null, RollingInterval.Day
+    )
+    .CreateLogger();
+
 builder.Services.AddMyServices(builder.Configuration);
 var config = builder.Configuration;
 var app = builder.Build();
@@ -16,34 +38,21 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 app.UseCors(opt =>
 {
-    opt.WithOrigins("https://localhost:5173");
+    opt.WithOrigins("http://localhost", "https://localhost:5173");
     opt.AllowAnyOrigin();
     opt.AllowAnyHeader();
     opt.AllowAnyMethod();
 });
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseResponseCompression();
+app.UseSerilogRequestLogging(opts =>
+{
+    opts.EnrichDiagnosticContext = LogEnricher.EnrichFromRequest;
+});
 app.UseAuthorization();
 
 app.MapControllers();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", (ClaimsPrincipal user) =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast").RequireAuthorization();
 //.WithOpenApi();
 
 // var group=app.MapGroup("/users");
@@ -60,16 +69,42 @@ app.MapGet("/weatherforecast", (ClaimsPrincipal user) =>
 //});
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+
+
+public static class LogEnricher
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public static string GetClientIpAddress(HttpContext context)
+    {
+        // Try to get the client IP address from the X-Real-IP header
+        var clientIp = context.Request.Headers["X-Real-IP"].FirstOrDefault() ?? string.Empty;
+
+        // If the X-Real-IP header is not present, fall back to the RemoteIpAddress property
+        if (string.IsNullOrEmpty(clientIp))
+        {
+            clientIp = context.Connection.RemoteIpAddress.ToString();
+        }
+
+        return clientIp;
+    }
+    public static void EnrichFromRequest(IDiagnosticContext diagnosticContext, HttpContext httpContext)
+    {
+        //httpContext.Request.Headers.TryGetValue("clientip", out var header);
+        //var ip = header.FirstOrDefault();
+        //var ip = httpContext?.Connection?.RemoteIpAddress?.ToString() ?? "Unknown";
+        var ip = GetClientIpAddress(httpContext);
+        diagnosticContext.Set("ClientIP", ip);// httpContext?.Connection?.RemoteIpAddress?.ToString() ?? "Unknown");
+        //diagnosticContext.Set("UserAgent", httpContext.Request.Headers["User-Agent"].FirstOrDefault());
+        diagnosticContext.Set("UserId", httpContext?.User?.FindFirstValue("UserId") ?? "Anonymous");
+        diagnosticContext.Set("RequestPath", httpContext?.Request?.Path ?? "Unknown");
+    }
+    public static string GetPropertyValue(LogEventPropertyValue? propertyValue)
+    {
+        if (propertyValue == null) return "";
+        if (propertyValue is ScalarValue)
+        {
+            var aa = propertyValue as ScalarValue;
+            return aa?.Value?.ToString() ?? "";
+        }
+        return "";
+    }
 }
-
-
-
-//public class LoginData
-//{
-//    public string UserName { get; set; }
-//    public string Password { get; set; }
-//    public string MachineName { get; set; }
-//}

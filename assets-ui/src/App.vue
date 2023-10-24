@@ -58,7 +58,6 @@ function toggleMenu(){
           </ul>
         </nav>
       </header>
-      <!-- <div v-bind:class = "!results.contactCompany ? 'grid grid-cols-2':'grid'"> -->
       <div :class="!authUser ? '': 'bg-gray-100 min-h-screen pt-40 text-lg'">
         <router-view/>
       </div>
