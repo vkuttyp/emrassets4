@@ -83,6 +83,8 @@
         "model": "Model",
         "numberPlate":"Number Plate",
         "deliveryDate":"Delivery Date",
-        "employeeName":"Employee Name"
+        "employeeName":"Employee Name",
+        "idNo":"National ID"
+
     }
 }

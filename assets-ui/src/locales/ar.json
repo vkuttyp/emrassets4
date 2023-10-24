@@ -85,6 +85,7 @@
         "model": "موديلها",
         "numberPlate":"رقم اللوحة",
         "deliveryDate":"تاريخ التسليم",
-        "employeeName":"اسم الموظف"
+        "employeeName":"اسم الموظف",
+        "idNo":"رقم السجل المدني"
     }
 }
